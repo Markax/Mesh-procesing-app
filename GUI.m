@@ -84,7 +84,5 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
             else
                disp(['User selected ', fullfile(path,file)]);
             end
-            [V,F] = read_vertices_and_faces_from_obj_file(file);
-            trisurf(F,V(:,1),V(:,2),V(:,3),'FaceColor',[0.26,0.33,1.0 ]);
-            light('Position',[-1.0,-1.0,100.0],'Style','infinite');
-            lighting phong;
+            read_vertices_and_faces_from_obj_file(file);
+            
