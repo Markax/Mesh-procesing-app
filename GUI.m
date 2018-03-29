@@ -78,11 +78,16 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to uipushtool1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-[file,path] = uigetfile('*.obj');
+[file,path] = uigetfile('*.*');
+[filepath,name,ext] = fileparts(file);
             if isequal(file,0)
                disp('User selected Cancel');
             else
                disp(['User selected ', fullfile(path,file)]);
             end
-            read_vertices_and_faces_from_obj_file(file);
+            if (isequal(ext, '.obj'))
+                read_vertices_and_faces_from_obj_file(file);
+            else
+                read_freesurfer_surf(file);
+            end
             
