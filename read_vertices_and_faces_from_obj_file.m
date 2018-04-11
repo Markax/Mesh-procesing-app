@@ -15,7 +15,27 @@ function [V,F] = read_vertices_and_faces_from_obj_file(filename)
   face_index = 1;
   fid = fopen(filename,'rt');
   line = fgets(fid);
+  
+  %variables of waitbar
+  s = dir(char(filename));
+  l = s.bytes / 23;
+  
+  w = int16(l/100);
+  it = 0;
+  ib = 0;
+  
+  %waitbar
+  wb = waitbar(ib, 'Loading mesh file...');
+  
   while ischar(line)
+      
+      it = it+1;
+      if (it == w)
+          it = 0;
+          ib = ib+0.01;
+          waitbar(ib, wb, 'Loading mesh file...');
+      end
+      
     vertex = sscanf(line,'v %f %f %f');
     face = sscanf(line,'f %d %d %d');
     face_long = sscanf(line,'f %d//%d %d//%d %d//%d',6);
@@ -42,12 +62,14 @@ function [V,F] = read_vertices_and_faces_from_obj_file(filename)
       F(face_index,:) = face_long_long;
       face_index = face_index+1;
     else
-     % fprintf('Ignored: %s',line);
+      fprintf('Ignored: %s',line);
     end
-
     line = fgets(fid);
   end
   fclose(fid);
+  waitbar(1, wb, 'Loading mesh file...');
+  
+  close(wb);
   trisurf(F,V(:,1),V(:,2),V(:,3),'FaceColor',[0.26,0.33,1.0 ]);
             light('Position',[-1.0,-1.0,100.0],'Style','infinite');
             lighting phong;

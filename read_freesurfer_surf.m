@@ -10,19 +10,25 @@ if (fid < 0)
   error(str) ;
 end
 
+wb = waitbar(0, 'Loading mesh file...');
 magic = fread3(fid) ;
 if(magic == QUAD_FILE_MAGIC_NUMBER)
+  waitbar(1/8, wb, 'Loading mesh file...');
   vnum = fread3(fid) ;
   fnum = fread3(fid) ;
   vertex_coords = fread(fid, vnum*3, 'int16') ./ 100 ; 
+  waitbar(2/7, wb, 'Loading mesh file...');
   if (nargout > 1)
     for i=1:fnum
       for n=1:4
-	faces(i,n) = fread3(fid) ;
+        faces(i,n) = fread3(fid) ;
       end
+      waitbar(3/7, wb, 'Loading mesh file...');
     end
+    waitbar(4/7, wb, 'Loading mesh file...');
   end
 elseif (magic == TRIANGLE_FILE_MAGIC_NUMBER)
+  waitbar(5/7, wb, 'Loading mesh file...');
   fgets(fid) ;
   fgets(fid) ;
   vnum = fread(fid, 1, 'int32') ;
@@ -30,12 +36,16 @@ elseif (magic == TRIANGLE_FILE_MAGIC_NUMBER)
   vertex_coords = fread(fid, vnum*3, 'float32') ; 
   faces = fread(fid, fnum*3, 'int32') ;
   faces = reshape(faces, 3, fnum)' ;
+  waitbar(6/7, wb, 'Loading mesh file...');
 end
 
 vertex_coords = reshape(vertex_coords, 3, vnum)' ;
 faces = faces + 1; % freesurfer indexes from 0 and MATLAB indexes from 1 
 
 fclose(fid) ;
+
+waitbar(1, wb, 'Loading mesh file...');
+close(wb);
 trisurf(faces,vertex_coords(:,1),vertex_coords(:,2),vertex_coords(:,3),'FaceColor',[0.26,0.33,1.0 ]);
             light('Position',[-1.0,-1.0,100.0],'Style','infinite');
             lighting phong;
