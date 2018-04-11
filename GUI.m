@@ -86,8 +86,8 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
                disp(['User selected ', fullfile(path,file)]);
             end
             if (isequal(ext, '.obj'))
-                read_vertices_and_faces_from_obj_file(file);
+                read_vertices_and_faces_from_obj_file(fullfile(path,file));
             else
-                read_freesurfer_surf(file);
+                read_freesurfer_surf(fullfile(path,file));
             end
             
