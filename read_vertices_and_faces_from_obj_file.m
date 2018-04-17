@@ -70,7 +70,17 @@ function [V,F] = read_vertices_and_faces_from_obj_file(filename)
   waitbar(1, wb, 'Loading mesh file...');
   
   close(wb);
-  trisurf(F,V(:,1),V(:,2),V(:,3),'FaceColor',[0.26,0.33,1.0 ]);
-            light('Position',[-1.0,-1.0,100.0],'Style','infinite');
-            lighting phong;
+  %trisurf(F,V(:,1),V(:,2),V(:,3),'FaceColor',[0.26,0.33,1.0 ]);
+  %          light('Position',[-1.0,-1.0,100.0],'Style','infinite');
+  %          lighting phong;
+  patch('vertices',obj.v,'faces',obj.f.v,'FaceVertexCData', tval);
+  shading interp
+  colormap gray(256);
+  lighting phong;
+  camproj('perspective');
+  axis square; 
+  axis off;
+  axis equal
+  axis tight;
+  cameramenu
 end

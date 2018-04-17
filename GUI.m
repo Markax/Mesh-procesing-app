@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 29-Mar-2018 20:57:03
+% Last Modified by GUIDE v2.5 11-Apr-2018 22:29:04
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -86,8 +86,8 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
                disp(['User selected ', fullfile(path,file)]);
             end
             if (isequal(ext, '.obj'))
-                read_vertices_and_faces_from_obj_file(fullfile(path,file));
+                readObj(fullfile(path,file));
             else
                 read_freesurfer_surf(fullfile(path,file));
             end
-            
+           
