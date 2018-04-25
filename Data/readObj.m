@@ -22,8 +22,27 @@ v = []; vt = []; vn = []; f.v = []; f.vt = []; f.vn = [];
 
 fid = fopen(fname);
 
+%variables of waitbar
+s = dir(char(fname));
+l = s.bytes / 23;
+  
+w = int16(l/100);
+it = 0;
+ib = 0;
+
+%waitbar
+wb = waitbar(ib, 'Loading mesh file...');
+
 % parse .obj file 
-while 1    
+while 1      
+    it = it+1;
+      if (it == w)
+          it = 0;
+          ib = ib+0.01;
+          waitbar(ib, wb, 'Loading mesh file...');
+      end
+
+
     tline = fgetl(fid);
     if ~ischar(tline),   break,   end  % exit at end of file 
      ln = sscanf(tline,'%s',1); % line type 
@@ -57,9 +76,12 @@ while 1
     end
 end
 fclose(fid);
+waitbar(1, wb, 'Loading mesh file...');
+  
+close(wb);
 
 % set up matlab object 
-obj.v = v; obj.vt = vt; obj.vn = vn; obj.f = f;
+obj.v = v; obj.vt = vt; obj.vn = vn; obj.f = f.v;
 trisurf(obj.f , obj.v(:,1), obj.v(:,2), obj.v(:,3),'FaceColor',[0.26,0.33,1.0 ]);
 shading interp
 colormap gray(256);
