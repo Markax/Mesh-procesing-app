@@ -1,0 +1,1 @@
+% Superficie generada a partir de un fichero .obj % superficie surface = struct('vertices', [

@@ -55,7 +55,7 @@ axis square;
 axis off;
 axis equal
 axis tight;
-cameramenu
+cameratoolbar
 
 %------------------------------------------------------------------
 function [retval] = fread3(fid)
