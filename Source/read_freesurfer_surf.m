@@ -50,6 +50,7 @@ trisurf(faces,vertex_coords(:,1),vertex_coords(:,2),vertex_coords(:,3),'FaceColo
 shading interp
 colormap gray(256);
 lighting phong;
+light('Position',[-1 0 0],'Style','local');
 camproj('perspective');
 axis square; 
 axis off;
