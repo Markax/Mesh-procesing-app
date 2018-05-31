@@ -78,7 +78,6 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to uipushtool1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-object_handles = findall(handle_list)
 
 [file,path] = uigetfile('*.*');
 [filepath,name,ext] = fileparts(file);
@@ -89,13 +88,12 @@ object_handles = findall(handle_list)
             end
             if (isequal(ext, '.obj'))
                 readObj(fullfile(path,file));
-                %set('uitoggletool3','enable','on');
-                %set(uitoggletool4,'enable','on');
+                set(handles.uitoggletool3,'enable','on');
+                set(handles.uitoggletool4,'enable','on');
             else
                 read_freesurfer_surf(fullfile(path,file));
-                %set(pan,'enable','on');
-                %uitoggletool(uitoolbar1,'State',PropertyValue
-                %set(uitoggletool4,'enable','on');
+                set(handles.uitoggletool3,'enable','on');
+                set(handles.uitoggletool4,'enable','on');
             end
            
 
