@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 18-Apr-2018 02:09:08
+% Last Modified by GUIDE v2.5 31-May-2018 19:09:48
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -78,6 +78,8 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to uipushtool1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+object_handles = findall(handle_list)
+
 [file,path] = uigetfile('*.*');
 [filepath,name,ext] = fileparts(file);
             if isequal(file,0)
@@ -87,7 +89,24 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
             end
             if (isequal(ext, '.obj'))
                 readObj(fullfile(path,file));
+                %set('uitoggletool3','enable','on');
+                %set(uitoggletool4,'enable','on');
             else
                 read_freesurfer_surf(fullfile(path,file));
+                %set(pan,'enable','on');
+                %uitoggletool(uitoolbar1,'State',PropertyValue
+                %set(uitoggletool4,'enable','on');
             end
            
+
+
+% --------------------------------------------------------------------
+function uitoggletool4_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to uitoggletool4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+rotate3d on
+
+function WindowScrollWheelFcn(hObject,eventdata,handles)
+
+zoom on
