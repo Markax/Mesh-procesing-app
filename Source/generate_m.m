@@ -91,7 +91,7 @@ for i = 1:s.vertices.size()
 		if (s.vertices(i).z > maxz) maxz = s.vertices(i).z; end
 end
 
-fprintf(fland, "# UJA-3DFD\n\n\n");
+fprintf(fland, "# UJA-SHFD\n\n\n");
 fprintf(fland, "define Markers 8\n");
 fprintf(fland, "Parameters {\n");
 fprintf(fland, "    NumSets 1,\n");
