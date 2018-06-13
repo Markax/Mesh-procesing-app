@@ -79,7 +79,7 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-[file,path] = uigetfile('*.*');
+[file,path] = uigetfile('../Models/*.*');
 [filepath,name,ext] = fileparts(file);
             if isequal(file,0)
                disp('User selected Cancel');
