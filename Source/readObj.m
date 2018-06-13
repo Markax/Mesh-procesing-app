@@ -82,15 +82,3 @@ close(wb);
 
 % set up matlab object 
 obj.v = v; obj.vt = vt; obj.vn = vn; obj.f = f.v;
-trisurf(obj.f , obj.v(:,1), obj.v(:,2), obj.v(:,3),'FaceColor',[0.26,0.33,1.0 ]);
-shading interp
-colormap gray(256);
-lighting phong;
-light('Position',[-1 0 0],'Style','local');
-camproj('perspective');
-axis square; 
-axis off;
-axis equal
-axis tight;
-cameratoolbar
-%display_obj(obj, 0);

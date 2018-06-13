@@ -87,13 +87,33 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
                disp(['User selected ', fullfile(path,file)]);
             end
             if (isequal(ext, '.obj'))
-                readObj(fullfile(path,file));
+                obj = readObj(fullfile(path,file));
                 set(handles.uitoggletool3,'enable','on');
                 set(handles.uitoggletool4,'enable','on');
+                trisurf(obj.f , obj.v(:,1), obj.v(:,2), obj.v(:,3),'FaceColor',[0.26,0.33,1.0 ]);
+                shading interp
+                colormap gray(256);
+                lighting phong;
+                light('Position',[-1 0 0],'Style','local');
+                camproj('perspective');
+                axis square; 
+                axis off;
+                axis equal
+                axis tight;
+                cameratoolbar
             else
-                read_freesurfer_surf(fullfile(path,file));
-                set(handles.uitoggletool3,'enable','on');
-                set(handles.uitoggletool4,'enable','on');
+                [vertex_coords, faces] = read_freesurfer_surf(fullfile(path,file));
+                trisurf(faces, vertex_coords(:,1), vertex_coords(:,2), vertex_coords(:,3),'FaceColor',[0.26,0.33,1.0 ]);
+                shading interp
+                colormap gray(256);
+                lighting phong;
+                light('Position',[-1 0 0],'Style','local');
+                camproj('perspective');
+                axis square; 
+                axis off;
+                axis equal
+                axis tight;
+                cameratoolbar
             end
            
 

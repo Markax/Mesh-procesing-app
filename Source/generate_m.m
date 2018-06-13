@@ -16,15 +16,11 @@ if (isequal(ext, '.obj'))
     fichero_m = fname( 1 : length(fname)-4) + ".m";
     
     fichero_land = fname(1 : length(fname)-4) + ".landmarkAscii";
-    disp(fichero_m);
 else
     if (isequal(ext, '.ETIQ'))
         fichero_m = fname( 1 : length(fname)-4) + ".m";
     
         fichero_land = fname(1 : length(fname)-4) + ".landmarkAscii";
-        disp(fichero_m);
-        
-            disp('En construccion');
     else
         disp('genera_M: Error: solo se admiten fichero .OBJ o .ETIQ');
         return;
@@ -33,6 +29,7 @@ end
 
 if (isequal(ext, '.obj'))
     fid = fopen(fichero_m,'w');
+    s = readObj(fname);
     
     % Header 
     fprintf(fid, "%% Superficie generada a partir de un fichero .obj ");
@@ -41,8 +38,8 @@ if (isequal(ext, '.obj'))
     % lanzamiento al archivo de los vértices 
     fprintf(fid,"surface = struct('vertices', [");
 
-    for i = 0:s.length
-        fprintf(fid, "%f %f %f;...\n", s.vertices(i).x, s.vertices(i).y, s.vertices(i).z);
+    for i = 1:size(s.v)
+        fprintf(fid, "%f %f %f;...\n", s.v(i,1), s.v(i,2), s.v(i,3));
     end
     fprintf(fid, "]);\n");
     fprintf(fid, "p = patch(surface);");
@@ -63,7 +60,7 @@ if (isequal(ext, '.ETIQ'))
     % lanzamiento al archivo de los vértices 
     fprintf(fm,"surface = struct('vertices', [");
 
-    for i = 0:s.length
+    for i = 1:s.length
 			fprintf(fm, "%f %f %f;...\n", s.vertices(i).x, s.vertices(i).y, s.vertices(i).z);
     end
 
@@ -76,19 +73,19 @@ if (isequal(ext, '.ETIQ'))
 end
 
 % fichero con landmarks
-fland=fopen(fichero_land.c_str(),"w");
+fland=fopen(fichero_land,"w");
 
-minx = s.vertices(0).x; maxx = s.vertices(0).x;
-miny = s.vertices(0).y; maxy = s.vertices(0).y;
-minz = s.vertices(0).z; maxz = s.vertices(0).z;
+minx = s.v(1,1); maxx = s.v(1,1);
+miny = s.v(1,2); maxy = s.v(1,2);
+minz = s.v(1,3); maxz = s.v(1,3);
 
-for i = 1:s.vertices.size()
-		if (s.vertices(i).x < minx) minx = s.vertices(i).x; end
-		if (s.vertices(i).x > maxx) maxx = s.vertices(i).x; end
-		if (s.vertices(i).y < miny) miny = s.vertices(i).y; end
-		if (s.vertices(i).y > maxy) maxy = s.vertices(i).y; end
-		if (s.vertices(i).z < minz) minz = s.vertices(i).z; end
-		if (s.vertices(i).z > maxz) maxz = s.vertices(i).z; end
+for i = 1:size(s.v)
+		if (s.v(i,1) < minx) minx = s.v(i,1); end
+		if (s.v(i,1) > maxx) maxx = s.v(i,1); end
+		if (s.v(i,2) < miny) miny = s.v(i,2); end
+		if (s.v(i,2) > maxy) maxy = s.v(i,2); end
+		if (s.v(i,2) < minz) minz = s.v(i,3); end
+		if (s.v(i,2) > maxz) maxz = s.v(i,3); end
 end
 
 fprintf(fland, "# UJA-SHFD\n\n\n");

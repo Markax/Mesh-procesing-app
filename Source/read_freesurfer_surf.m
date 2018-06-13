@@ -46,17 +46,6 @@ fclose(fid) ;
 
 waitbar(1, wb, 'Loading mesh file...');
 close(wb);
-trisurf(faces,vertex_coords(:,1),vertex_coords(:,2),vertex_coords(:,3),'FaceColor',[0.26,0.33,1.0 ]);
-shading interp
-colormap gray(256);
-lighting phong;
-light('Position',[-1 0 0],'Style','local');
-camproj('perspective');
-axis square; 
-axis off;
-axis equal
-axis tight;
-cameratoolbar
 
 %------------------------------------------------------------------
 function [retval] = fread3(fid)
