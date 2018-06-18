@@ -2,14 +2,6 @@ function m_file = generate_m(fname)
 
 [filepath,name,ext] = fileparts(fname);
 
-%maxx;maxy;maxz;minx;miny;minz;
-%fichero_m; fichero_land;
-
-%fin1 = fichero.substr(fichero.length()-4,4);
-%fin2 = fichero.substr(fichero.length()-5,5);
-%transform(fin1.begin(), fin1.end(), fin1.begin(), ::toupper);
-%transform(fin2.begin(), fin2.end(), fin2.begin(), ::toupper);
-
 if (isequal(ext, '.obj'))
     % Generacion de ficheros m y land 
     
@@ -32,11 +24,11 @@ if (isequal(ext, '.obj'))
     s = readObj(fname);
     
     % Header 
-    fprintf(fid, "%% Superficie generada a partir de un fichero .obj ");
-    fprintf(fid, "%% superficie %s (%d vertices, %d triangulos)\n");
+    fprintf(fid, "%% Superficie generada a partir de un fichero .obj \n");
+    %fprintf(fid, "%% superficie %s (%d vertices, %d triangulos)\n");
     
     % lanzamiento al archivo de los vértices 
-    fprintf(fid,"surface = struct('vertices', [");
+    fprintf(fid,"surface = struct('vertices', [\n");
 
     for i = 1:size(s.v)
         fprintf(fid, "%f %f %f;...\n", s.v(i,1), s.v(i,2), s.v(i,3));
@@ -55,7 +47,7 @@ if (isequal(ext, '.ETIQ'))
     
     % Header 
     fprintf(fid, "%% Superficie generada a partir de un fichero .asc de FreeSurfer\n");
-    fprintf(fid, "%% superficie %s (%d vertices, %d triangulos)\n");
+    %fprintf(fid, "%% superficie %s (%d vertices, %d triangulos)\n");
     
     % lanzamiento al archivo de los vértices 
     fprintf(fm,"surface = struct('vertices', [");
