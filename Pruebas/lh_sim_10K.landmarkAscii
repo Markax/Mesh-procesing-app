@@ -4,7 +4,7 @@
 define Markers 8
 Parameters {
     NumSets 1,
-    ContentType "LandmarkSet"
+    ContentType 'LandmarkSet'
 }
 
 Markers { float[3] Coordinates } @1
