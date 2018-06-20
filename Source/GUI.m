@@ -85,6 +85,8 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
             if isequal(file,0)
                disp('User selected Cancel');
             else
+               global fpath;
+               fpath = fullfile(path,file);
                disp(['User selected ', fullfile(path,file)]);
             end
             if (isequal(ext, '.obj'))
@@ -153,4 +155,5 @@ function MFileButton_Callback(hObject, eventdata, handles)
 % hObject    handle to MFileButton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+global fpath;
+generate_m(fpath);
