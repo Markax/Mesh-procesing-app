@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 18-Jun-2018 20:13:49
+% Last Modified by GUIDE v2.5 20-Jun-2018 17:09:09
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -93,6 +93,7 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
                 set(handles.uitoggletool1,'enable','on');
                 set(handles.uitoggletool3,'enable','on');
                 set(handles.uitoggletool4,'enable','on');
+                set(handles.MFileButton,'enable','on');
                 trisurf(obj.f , obj.v(:,1), obj.v(:,2), obj.v(:,3),'FaceColor',[0.26,0.33,1.0 ]);
                 shading interp
                 colormap gray(256);
@@ -112,6 +113,7 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
                 set(handles.uitoggletool1,'enable','on');
                 set(handles.uitoggletool3,'enable','on');
                 set(handles.uitoggletool4,'enable','on');
+                set(handles.MFileButton,'enable','on');
                 trisurf(faces, vertex_coords(:,1), vertex_coords(:,2), vertex_coords(:,3),'FaceColor',[0.26,0.33,1.0 ]);
                 shading interp
                 colormap gray(256);
@@ -144,3 +146,11 @@ function uipushtool2_ClickedCallback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 delete(findall(gcf,'Type','light'));
 camlight('headlight');
+
+
+% --- Executes on button press in MFileButton.
+function MFileButton_Callback(hObject, eventdata, handles)
+% hObject    handle to MFileButton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+

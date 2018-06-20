@@ -33,6 +33,14 @@ if (isequal(ext, '.obj'))
     for i = 1:size(s.v)
         fprintf(fid, '%f %f %f;...\n', s.v(i,1), s.v(i,2), s.v(i,3));
     end
+    fprintf(fid,'], ''faces'', [');
+
+    % lanzamiento al archivo de los triángulos 
+    for i = 1:size(s.f)
+		fprintf(fid, "%d %d %d;...\n", s.f(i,1), s.f(i,2), s.f(i,3));
+    end
+    
+    
     fprintf(fid, ']);\n');
     fprintf(fid, 'p = patch(surface);');
     
@@ -55,9 +63,16 @@ if (isequal(ext, '.ETIQ'))
     for i = 1:s.length
 			fprintf(fm, '%f %f %f;...\n', s.vertices(i).x, s.vertices(i).y, s.vertices(i).z);
     end
+    fprintf(fid,'], ''faces'', [');
 
-    fprintf(fm, ']);\n');
-    fprintf(fm, 'p = patch(surface);');
+    % lanzamiento al archivo de los triángulos 
+    for i = 1:size(s.f)
+		fprintf(fid, "%d %d %d;...\n", s.f(i,1), s.f(i,2), s.f(i,3));
+    end
+    
+    
+    fprintf(fid, ']);\n');
+    fprintf(fid, 'p = patch(surface);');
     
     % fin archivo
     fclose(fm);
