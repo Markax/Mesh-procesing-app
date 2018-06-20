@@ -5,14 +5,14 @@ function m_file = generate_m(fname)
 if (isequal(ext, '.obj'))
     % Generacion de ficheros m y land 
     
-    fichero_m = strcat(fname( 1 : length(fname)-3),'m');
+    fichero_m = fname( 1 : length(fname)-4);
     
-    fichero_land = strcat(fname(1 : length(fname)-3), 'landmarkAscii');
+    fichero_land = fname(1 : length(fname)-4) + ".landmarkAscii";
 else
     if (isequal(ext, '.ETIQ'))
-        fichero_m = strcat(fname( 1 : length(fname)-3) + 'm');
+        fichero_m = fname( 1 : length(fname)-4) + ".m";
     
-        fichero_land = strcat(fname(1 : length(fname)-3), 'landmarkAscii');
+        fichero_land = fname(1 : length(fname)-4) + ".landmarkAscii";
     else
         disp('genera_M: Error: solo se admiten fichero .OBJ o .ETIQ');
         return;
@@ -25,7 +25,7 @@ if (isequal(ext, '.obj'))
     
     % Header 
     fprintf(fid, '%% Superficie generada a partir de un fichero .obj \n');
-    fprintf(fid, '%% superficie %s (%d vertices, %d triangulos)\n', name, length(s.v), length(s.f));
+    fprintf(fid, '%% superficie %s (%d vertices, %d triangulos)\n');
     
     % lanzamiento al archivo de los vértices 
     fprintf(fid,'surface = struct(''vertices'', [\n');
@@ -47,7 +47,7 @@ if (isequal(ext, '.ETIQ'))
     
     % Header 
     fprintf(fid, '%% Superficie generada a partir de un fichero .asc de FreeSurfer\n');
-    fprintf(fid, '%% superficie %s (%d vertices, %d triangulos)\n', name, length(s.v), length(s.f));
+    fprintf(fid, '%% superficie %s (%d vertices, %d triangulos)\n');
     
     % lanzamiento al archivo de los vértices 
     fprintf(fm,'surface = struct(''vertices'', [');
