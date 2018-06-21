@@ -108,7 +108,7 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
                 axis tight;  
                 camlight('headlight')
                 cameratoolbar;
-                zoom on;
+                rotate3d on;
             else
                 [vertex_coords, faces] = read_freesurfer_surf(fullfile(path,file));
                 set(handles.uipushtool2,'enable','on');
@@ -128,7 +128,7 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
                 axis tight;
                 camlight('headlight');
                 cameratoolbar;
-                zoom on;
+                rotate3d on;
             end
            
 
