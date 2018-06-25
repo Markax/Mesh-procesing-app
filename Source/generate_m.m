@@ -28,7 +28,7 @@ if (isequal(ext, '.obj'))
     fprintf(fid, '%% superficie %s (%d vertices, %d triangulos)\n', name, length(s.v), length(s.f));
     
     % lanzamiento al archivo de los vértices 
-    fprintf(fid,'surface = struct(''vertices'', [...\n');
+    fprintf(fid,'surface = struct(''vertices'', [');
 
     for i = 1:size(s.v)
         fprintf(fid, '%f %f %f;...\n', s.v(i,1), s.v(i,2), s.v(i,3));
