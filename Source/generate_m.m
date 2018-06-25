@@ -10,7 +10,7 @@ if (isequal(ext, '.obj'))
     fichero_land = strcat(fname(1 : length(fname)-3), 'landmarkAscii');
 else
     if (isequal(ext, '.ETIQ'))
-        fichero_m = strcat(fname( 1 : length(fname)-3) + 'm');
+        fichero_m = strcat(fname( 1 : length(fname)-3), 'm');
     
         fichero_land = strcat(fname(1 : length(fname)-3), 'landmarkAscii');
     else
@@ -79,6 +79,10 @@ if (isequal(ext, '.ETIQ'))
     
 end
 
+folder = strcat(name, '_temp');
+mkdir('../Models',folder);
+movefile(fichero_m, strcat('../Models/', folder)); 
+
 % fichero con landmarks
 fland=fopen(fichero_land,'w');
 
@@ -116,3 +120,5 @@ fprintf(fland,'%f %f %f\n', maxx, maxy, maxz);
 fprintf(fland,'%f %f %f\n', maxx, maxy, minz);
 
 fclose(fland);
+
+movefile(fichero_land, strcat('../Models/', folder)); 
