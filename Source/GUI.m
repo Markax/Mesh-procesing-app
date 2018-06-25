@@ -166,6 +166,7 @@ max = str2double(get(handles.maxL, 'String'));
 if (min > 0 && max > min)
     global fpath;
     generate_m(fpath);
+    BATCH_MLCombineAndResize('../Models/
 else 
     if (min < 1)
         disp('Error: Min L value must be 1 or greater');

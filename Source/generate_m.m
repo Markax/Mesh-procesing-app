@@ -37,7 +37,7 @@ if (isequal(ext, '.obj'))
 
     % lanzamiento al archivo de los triángulos 
     for i = 1:size(s.f)
-		fprintf(fid, "%d %d %d;...\n", s.f(i,1), s.f(i,2), s.f(i,3));
+		fprintf(fid, '%d %d %d;...\n', s.f(i,1), s.f(i,2), s.f(i,3));
     end
     
     
@@ -67,7 +67,7 @@ if (isequal(ext, '.ETIQ'))
 
     % lanzamiento al archivo de los triángulos 
     for i = 1:size(s.f)
-		fprintf(fid, "%d %d %d;...\n", s.f(i,1), s.f(i,2), s.f(i,3));
+		fprintf(fid, '%d %d %d;...\n', s.f(i,1), s.f(i,2), s.f(i,3));
     end
     
     
