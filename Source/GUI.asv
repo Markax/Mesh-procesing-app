@@ -96,8 +96,6 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
                 set(handles.uitoggletool3,'enable','on');
                 set(handles.uitoggletool4,'enable','on');
                 set(handles.MFileButton,'enable','on');
-                set(handles.minL,'enable','on');
-                set(handles.maxL,'enable','on');
                 trisurf(obj.f , obj.v(:,1), obj.v(:,2), obj.v(:,3),'FaceColor',[0.26,0.33,1.0 ]);
                 shading interp
                 colormap gray(256);
@@ -118,8 +116,6 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
                 set(handles.uitoggletool3,'enable','on');
                 set(handles.uitoggletool4,'enable','on');
                 set(handles.MFileButton,'enable','on');
-                set(handles.minL,'enable','on');
-                set(handles.maxL,'enable','on');
                 trisurf(faces, vertex_coords(:,1), vertex_coords(:,2), vertex_coords(:,3),'FaceColor',[0.26,0.33,1.0 ]);
                 shading interp
                 colormap gray(256);
@@ -164,8 +160,9 @@ min = str2double(get(handles.minL, 'String'));
 max = str2double(get(handles.maxL, 'String'));
 
 if (min > 0 && max > min)
-    global fpath;
-    generate_m(fpath);
+    %global fpath;
+    %generate_m(fpath);
+    disp('hhhhhhhhhhhhh');
 else 
     if (min < 1)
         disp('Error: Min L value must be 1 or greater');
@@ -177,8 +174,7 @@ else
         disp('Error: Min L value must be a interger number');
     end
     if (isnan(max))
-        disp('Error: Max L value must be a intergernumber');
-    end
+        disp('Error: Max L value m
 end
 
 
