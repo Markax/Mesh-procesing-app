@@ -164,6 +164,7 @@ min = str2double(get(handles.minL, 'String'));
 max = str2double(get(handles.maxL, 'String'));
 
 if (min > 0 && max > min)
+    addpath(genpath('spharm'))
     global fpath;
     [filepath,name] = fileparts(fpath);
     % convert to m file
@@ -177,6 +178,7 @@ if (min > 0 && max > min)
     
     % last step
     BATCH_genera_reconstrucciones((strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_smo.mat')), min, max);
+    disp('Done');
 else 
     if (min < 1)
         disp('Error: Min L value must be 1 or greater');
@@ -190,8 +192,8 @@ else
     if (isnan(max))
         disp('Error: Max L value must be a intergernumber');
     end
-    disp('Done');
 end
+
 
 
 
