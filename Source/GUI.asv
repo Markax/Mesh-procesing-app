@@ -190,7 +190,7 @@ else
     if (isnan(max))
         disp('Error: Max L value must be a intergernumber');
     end
-    disp('Done');
+    disp('Done'
 end
 
 
