@@ -185,16 +185,16 @@ if (min > 0 && max > min)
     disp('Done');
 else 
     if (min < 1)
-        disp('Error: Min L value must be 1 or greater');
+        errordlg('Error: Min L value must be 1 or greater', 'Min Value Error');
     end
     if (max < min)
-        disp('Error: Max L value must be greater than Min L value');
+        errordlg('Error: Max L value must be greater than Min L value', 'Max Value Error');
     end
     if (isnan(min))
-        disp('Error: Min L value must be a interger number');
+        errordlg('Error: Min L value must be a interger number', 'Min Value Error');
     end
     if (isnan(max))
-        disp('Error: Max L value must be a intergernumber');
+        errordlg('Error: Max L value must be a interger number', 'Max Value Error');
     end
 end
 
