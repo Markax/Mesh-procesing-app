@@ -2,6 +2,7 @@ function m_file = generate_m(fname)
 
 [filepath,name,ext] = fileparts(fname);
 
+wb = waitbar(0, 'Generating M File...  (1/4)', 'Name', 'Generating Spherical Harmonics');
 if (isequal(ext, '.obj'))
     % Generacion de ficheros m y land 
     
@@ -19,6 +20,8 @@ else
     end    
 end
 
+waitbar(1/5, wb, 'Generating M File... (1/4)');
+
 if (isequal(ext, '.obj'))
     fid = fopen(fichero_m,'w');
     s = readObj(fname);
@@ -35,6 +38,8 @@ if (isequal(ext, '.obj'))
     end
     fprintf(fid,'], ''faces'', [');
 
+    waitbar(2/5, wb, 'Generating M File...  (1/4)');
+    
     % lanzamiento al archivo de los triángulos 
     for i = 1:size(s.f)
 		fprintf(fid, '%d %d %d;...\n', s.f(i,1), s.f(i,2), s.f(i,3));
@@ -65,6 +70,8 @@ if (isequal(ext, '.ETIQ'))
     end
     fprintf(fid,'], ''faces'', [');
 
+    waitbar(2/5, wb, 'Generating M File...  (1/4)');
+    
     % lanzamiento al archivo de los triángulos 
     for i = 1:size(s.f)
 		fprintf(fid, '%d %d %d;...\n', s.f(i,1), s.f(i,2), s.f(i,3));
@@ -78,6 +85,8 @@ if (isequal(ext, '.ETIQ'))
     fclose(fm);
     
 end
+
+waitbar(3/5, wb, 'Generating M File...  (1/4)');
 
 folder = strcat(name, '_temp');
 mkdir('../Models',folder);
@@ -98,6 +107,8 @@ for i = 1:size(s.v)
 		if (s.v(i,2) < minz) minz = s.v(i,3); end
 		if (s.v(i,2) > maxz) maxz = s.v(i,3); end
 end
+
+waitbar(4/5, wb, 'Generating M File...  (1/4)');
 
 fprintf(fland, '# UJA-SHFD\n\n\n');
 fprintf(fland, 'define Markers 8\n');
@@ -121,4 +132,8 @@ fprintf(fland,'%f %f %f\n', maxx, maxy, minz);
 
 fclose(fland);
 
-movefile(fichero_land, strcat('../Models/', folder)); 
+waitbar(1, wb, 'Generating M File...  (1/4)');
+
+movefile(fichero_land, strcat('../Models/', folder));
+
+close(wb);

@@ -31,7 +31,7 @@ it = 0;
 ib = 0;
 
 %waitbar
-wb = waitbar(ib, 'Loading mesh file...');
+wb = waitbar(ib, 'Loading mesh file...', 'Name', 'Loading');
 
 % parse .obj file 
 while 1      

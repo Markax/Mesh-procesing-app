@@ -27,6 +27,7 @@ function [currentDir] = BATCH_MLCombineAndResize(currentDir, x, y, z)
 %
 % z is a flag for writing sizes to an output file.
 
+wb = waitbar(0, 'Repositionating in the origin...  (2/4)', 'Name', 'Generating Spherical Harmonics');
 
 disp('INSIDE MLCombineAndResize.');
 % set incoming parameters
@@ -60,6 +61,8 @@ else
     end
 end
 
+waitbar(1/n+4, wb, 'Repositionating in the origin...  (2/4)');
+
 % get file to write sizes as data
 if (sizesToFile)
     [outputTextFileName, textDir, fi] = uiputfile({'*.*','All Files'},'Output size data as text.',currentDir);
@@ -77,10 +80,12 @@ if (sizesToFile)
     end
 end
 
-
-
+waitbar(2/n+4, wb, 'Repositionating in the origin...  (2/4)');
 % Process files
 for i = 1:n;
+    
+    waitbar(2+i/n+4, wb, 'Repositionating in the origin...  (2/4)');
+    
     if (moreThanOneFile)
         file = fullfile(currentDir,names{i});
     else
@@ -156,6 +161,8 @@ for i = 1:n;
         end        
     end
     
+    waitbar(3+n/n+4, wb, 'Repositionating in the origin...  (2/4)');
+    
     % Modificado por Juan. Se ha pasado dentro del if de arriba, ya que si no
     % falla si sizesToFile es 1 ya que rescaleSize no estaria definido
     %if (sizesToFile)
@@ -176,7 +183,12 @@ if (sizesToFile)
     fclose(fid);
 end
 
+waitbar(1, wb, 'Repositionating in the origin...  (2/4)'); 
+
 disp('MLCombineAndResize finished.');
+
+close(wb);
+
 end
 
 
