@@ -95,9 +95,11 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
                 set(handles.uitoggletool1,'enable','on');
                 set(handles.uitoggletool3,'enable','on');
                 set(handles.uitoggletool4,'enable','on');
-                set(handles.MFileButton,'enable','on');
-                set(handles.minL,'enable','on');
-                set(handles.maxL,'enable','on');
+                set(handles.MFileButton,'visible','on');
+                set(handles.minL,'visible','on');
+                set(handles.maxL,'visible','on');
+                set(handles.maxText,'visible','on');
+                set(handles.minText,'visible','on');
                 trisurf(obj.f , obj.v(:,1), obj.v(:,2), obj.v(:,3),'FaceColor',[0.26,0.33,1.0 ]);
                 shading interp
                 colormap gray(256);
@@ -117,9 +119,11 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
                 set(handles.uitoggletool1,'enable','on');
                 set(handles.uitoggletool3,'enable','on');
                 set(handles.uitoggletool4,'enable','on');
-                set(handles.MFileButton,'enable','on');
-                set(handles.minL,'enable','on');
-                set(handles.maxL,'enable','on');
+                set(handles.MFileButton,'visible','on');
+                set(handles.minL,'visible','on');
+                set(handles.maxL,'visible','on');
+                set(handles.maxText,'visible','on');
+                set(handles.minText,'visible','on');
                 trisurf(faces, vertex_coords(:,1), vertex_coords(:,2), vertex_coords(:,3),'FaceColor',[0.26,0.33,1.0 ]);
                 shading interp
                 colormap gray(256);
