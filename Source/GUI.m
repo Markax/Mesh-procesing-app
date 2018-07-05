@@ -180,8 +180,11 @@ if (min > 0 && max > min)
     % OL2_O2 file to MakeTemplate
     BATCH_MLMakeTemplate((strcat(filepath,'\',name,'_temp','\',name,'_OL_2O.mat')), 1, 1)
     
-    % last step
+    % Rebuilding
     BATCH_genera_reconstrucciones((strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_smo.mat')), min, max);
+    
+    % Generate Areas
+    generate_areas_per_vertex_file((strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf')));
     disp('Done');
 else 
     if (min < 1)
