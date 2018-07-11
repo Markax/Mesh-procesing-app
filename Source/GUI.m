@@ -173,7 +173,7 @@ max_L_regression_Local = str2double(fgetl(fid));
 min_L_regression_Global = str2double(fgetl(fid));
 max_L_regression_Global = str2double(fgetl(fid));
 
-if (min > 0 && max > min && min_L_regression_Local <= max_L_regression_Local && min <= min_L_regression_Local && max >= max_L_regression_Local && min_L_regression_Global <= max_L_regression_Global && min <= min_L_regression_Global && max >= max_L_regression_Global)
+if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && min <= min_L_regression_Local && max >= max_L_regression_Local && min_L_regression_Global < max_L_regression_Global && min <= min_L_regression_Global && max >= max_L_regression_Global)
     addpath(genpath('spharm'));
     addpath(genpath('hk_smoothing'));
     global fpath;

@@ -100,7 +100,7 @@ maxLGlobal = str2double(get(handles.edit6, 'String'));
 if (isnan(sigma) || isnan(numiter) || isnan(minLLocal) ||isnan(maxLLocal) || isnan(minLGlobal) || isnan(maxLGlobal))
     errordlg('Values must be a number', 'Value error');
 else
-    if ( minLLocal > maxLLocal || minLGlobal > maxLGlobal )
+    if ( minLLocal >= maxLLocal || minLGlobal >= maxLGlobal )
         errordlg('"max L regression" value must be greater than "min L regression"', 'Value error');
     else
         fid = fopen('config.txt', 'w');
