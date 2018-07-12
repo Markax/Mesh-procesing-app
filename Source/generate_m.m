@@ -20,7 +20,7 @@ else
     end    
 end
 
-waitbar(1/5, wb, 'Generating M File... (1/4)');
+waitbar(1/5, wb, 'Generating M File... (1/5)');
 
 if (isequal(ext, '.obj'))
     fid = fopen(fichero_m,'w');
@@ -38,7 +38,7 @@ if (isequal(ext, '.obj'))
     end
     fprintf(fid,'], ''faces'', [');
 
-    waitbar(2/5, wb, 'Generating M File...  (1/4)');
+    waitbar(2/5, wb, 'Generating M File...  (1/5)');
     
     % lanzamiento al archivo de los triángulos 
     for i = 1:size(s.f)
@@ -70,7 +70,7 @@ if (isequal(ext, '.ETIQ'))
     end
     fprintf(fid,'], ''faces'', [');
 
-    waitbar(2/5, wb, 'Generating M File...  (1/4)');
+    waitbar(2/5, wb, 'Generating M File...  (1/5)');
     
     % lanzamiento al archivo de los triángulos 
     for i = 1:size(s.f)
@@ -86,7 +86,7 @@ if (isequal(ext, '.ETIQ'))
     
 end
 
-waitbar(3/5, wb, 'Generating M File...  (1/4)');
+waitbar(3/5, wb, 'Generating M File...  (1/5)');
 
 folder = strcat(name, '_temp');
 mkdir('../Models',folder);
@@ -108,7 +108,7 @@ for i = 1:size(s.v)
 		if (s.v(i,2) > maxz) maxz = s.v(i,3); end
 end
 
-waitbar(4/5, wb, 'Generating M File...  (1/4)');
+waitbar(4/5, wb, 'Generating M File...  (1/5)');
 
 fprintf(fland, '# UJA-SHFD\n\n\n');
 fprintf(fland, 'define Markers 8\n');
@@ -132,7 +132,7 @@ fprintf(fland,'%f %f %f\n', maxx, maxy, minz);
 
 fclose(fland);
 
-waitbar(1, wb, 'Generating M File...  (1/4)');
+waitbar(1, wb, 'Generating M File...  (1/5)');
 
 movefile(fichero_land, strcat('../Models/', folder));
 

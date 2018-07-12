@@ -16,6 +16,8 @@ function hk_smooth_3dshfd(fich_areas,sigma,num_iter)
 sigma = double(sigma);
 num_iter = double(num_iter);
 
+wb = waitbar(0, 'Smoothing mesh...  (5/5)', 'Name', 'Generating Spherical Harmonics');
+
 format long; % para no perder precisión al leer los flotantes desde fichero
 
 disp('hk_smooth_3dshfd: comienza proceso');
@@ -41,6 +43,8 @@ areas_smooth = zeros(num_vert, num_rec);
 % para cada reconstrucción, se cargan las áreas de los vértices y se
 % aplica y almacena el heat kernel smoothing
 for rec = 1:num_rec
+    
+    waitbar(rec/(num_rec), wb, 'Smoothing mesh...  (5/5)');
     % se lee el nombre del fichero SURF para la reconstruccion rec
     fich_surf = sscanf(fgetl(fid),'%s');
     %disp('**************************');
@@ -98,7 +102,10 @@ for i = 1:num_vert
 end
 fclose(fid);
 
+waitbar(1, wb, 'Smoothing mesh...  (5/5)');
+
 disp('hk_smooth_3dshfd: terminado');
+close(wb);
 
 %{ 
 % Prueba con números aleatorios

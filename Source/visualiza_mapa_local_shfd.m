@@ -12,6 +12,7 @@ function visualiza_mapa_local_shfd(superficie,shfd)
 format long; % para no perder precisión al leer los flotantes desde fichero
 
 disp('visualiza_mapa_local_shfd: comienza proceso');
+addpath(genpath('figure_trimesh'));
 
 % se pasa la superficie a formato .mat
 disp(['Leyendo superficie: ' superficie]);
@@ -40,7 +41,6 @@ if (fid < 0)
     disp(['visualiza_mapa_local_shfd: error, no puedo abrir el fichero con las shfd: ' shfd]);
     return;
 end
-
 for vert = 1:num_vert
     linea = fgetl(fid);
     if (linea < 0)
@@ -60,7 +60,6 @@ end
 fclose(fid);
 
 disp('Terminado. Visualizando...');
-
 % llama a código de Chung
 figure_trimesh(surf,output,'rywb'); 
 end
