@@ -36,7 +36,8 @@ int convierte_SURF_a_DFS(std::string fichero_SURF, SILT::DFSurface &sup) {
 
 	FILE * file = fopen(fichero_SURF.c_str(), "r");
 	if( file == NULL ){
-		mexPrintf("Convierte_SURF_a_DFS: Error: No se puede abrir el fichero %s\n",fichero_SURF);
+		std::string err = std::string("Convierte_SURF_a_DFS: Error: No se puede abrir el fichero") + fichero_SURF;
+		mexErrMsgTxt(err.c_str());
 		return 0;
 	}
 
@@ -216,7 +217,8 @@ int busca_ficheros_SURF(std::string fichero, std::vector<surface_processing::sc_
 		pos_ini = fichero.find("OL_2O_") + 6;
 		pos_fin = fichero.find("_", pos_ini);
 	} else {
-		mexPrintf("busca_ficheros_SURF: Error, el fichero seleccionado no se ajusta a los posibles patrones\n");
+		mexErrMsgTxt("busca_ficheros_SURF: Error, el fichero seleccionado no se ajusta a los posibles patrones\n");
+		return 0;
 	}
 
 	std::string inicio_nombre_fichero = fichero.substr(0, pos_ini),
@@ -265,7 +267,8 @@ int busca_ficheros_OBJ(std::string fichero, std::vector<surface_processing::sc_e
 		pos_ini = fichero.find("OL_2O_") + 6;
 		pos_fin = fichero.find("_", pos_ini);
 	} else {
-		mexPrintf("busca_ficheros_OBJ: Error, el fichero seleccionado no se ajusta a los posibles patrones\n");
+		mexErrMsgTxt("busca_ficheros_OBJ: Error, el fichero seleccionado no se ajusta a los posibles patrones\n");
+		return 0;
 	}
 
 	std::string inicio_nombre_fichero = fichero.substr(0, pos_ini),
@@ -321,7 +324,7 @@ void surface_processing::calcula_fichero_Region_SH_FD_por_region(std::string fic
 	/* carga los nombres de los ficheros SURF con todas las reconstrucciones SH y el grado de cada una,
 	   se reutiliza la estructura sc_ele de la global sh, aunque sc_ele.area no se utiliza */
 	if (!busca_ficheros_SURF(fichero_surf, surf_count)/*busca_ficheros_OBJ(fichero, surf_count)*/) {
-		mexPrintf("Error: calcula_Local_SH_FD: No encuentro ficheros SURF para calcular la Local SH-FD\n");
+		mexErrMsgTxt("Error: calcula_Local_SH_FD: No encuentro ficheros SURF para calcular la Local SH-FD\n");
 		return;
 	}
 
@@ -333,8 +336,9 @@ void surface_processing::calcula_fichero_Region_SH_FD_por_region(std::string fic
 	for(std::vector<sc_ele>::iterator it = surf_count.begin(); it != surf_count.end(); it++) {
 		/* convertir a DFS la malla SURF */
 		if (!convierte_SURF_a_DFS(it->fichero, recons[i])/*convierte_OBJ_a_DFS(it->fichero, recons[i])*/) {
-			mexPrintf("\nError: calcula_Local_SH_FD: No se puede convertir fichero %s a DFS\n", it->fichero);
-			exit(0);
+			std::string err = std::string("Error: calcula_Local_SH_FD: No se puede convertir fichero ") + it->fichero + std::string("\n");
+			mexErrMsgTxt(err.c_str());
+			return;
 		};
 
 		/* calcular el área de cada triángulo de la reconstrucción i */
@@ -464,7 +468,7 @@ void surface_processing::calcula_fichero_Local_SH_FD_por_triangulos(std::string 
 	/* carga los nombres de los ficheros SURF con todas las reconstrucciones SH y el grado de cada una,
 	   se reutiliza la estructura sc_ele de la global sh, aunque sc_ele.area no se utiliza */
 	if (!busca_ficheros_SURF(fichero, surf_count)/*busca_ficheros_OBJ(fichero, surf_count)*/) {
-		mexPrintf("Error: calcula_Local_SH_FD: No encuentro ficheros SURF para calcular la Local SH-FD\n");
+		mexErrMsgTxt("Error: calcula_Local_SH_FD: No encuentro ficheros SURF para calcular la Local SH-FD\n");
 		return;
 	}
 
@@ -474,8 +478,9 @@ void surface_processing::calcula_fichero_Local_SH_FD_por_triangulos(std::string 
 	for(std::vector<sc_ele>::iterator it = surf_count.begin(); it != surf_count.end(); it++) {
 		/* convertir a DFS la malla SURF */
 		if (!convierte_SURF_a_DFS(it->fichero, recons[i])/*convierte_OBJ_a_DFS(it->fichero, recons[i])*/) {
-			mexPrintf("\nError: calcula_Local_SH_FD: No se puede convertir fichero %s a DFS", it->fichero);
-			exit(0);
+			std::string err = std::string("Error: calcula_Local_SH_FD: No se puede convertir fichero ") + it->fichero + std::string("\n");
+			mexErrMsgTxt(err.c_str());
+			return;
 		};
 
 		i++;
@@ -560,6 +565,11 @@ void surface_processing::calcula_Local_SH_FD_por_vertices(std::string fich_areas
 
 	//std::ifstream f_areas(fich_areas);
 	std::ifstream f_areas(fich_areas.c_str());
+	if (!f_areas.good()) {
+		std::string err = std::string("calcula_Local_SH_FD_por_vertices: error, el fichero de áreas ") + fich_areas + std::string(" no existe");
+    mexErrMsgTxt(err.c_str());
+		return;
+	}
 
 	/* se lee el número de reconstrucciones, irán de 0 a tv_fin-1 */
 	f_areas >> linea;
@@ -568,8 +578,8 @@ void surface_processing::calcula_Local_SH_FD_por_vertices(std::string fich_areas
   if ((inicio_recta < 1) || (fin_recta > num_rec) ||
       (inicio_recta > num_rec) || (fin_recta < 1) ||
       (fin_recta < inicio_recta)) {
-    mexPrintf("calcula_Local_SH_FD_por_vertices: error, rangos calculo de recta erroneos");
-		exit(0);
+    mexErrMsgTxt("calcula_Local_SH_FD_por_vertices: error, rangos calculo de recta erroneos");
+		return;
 	}
 
 	/* se leen el número de vértices */
@@ -706,7 +716,7 @@ void surface_processing::calcula_fichero_Local_SH_FD_por_vertices(std::string fi
 	/* carga los nombres de los ficheros SURF con todas las reconstrucciones SH y el grado de cada una,
 	   se reutiliza la estructura sc_ele de la global sh, aunque sc_ele.area no se utiliza */
 	if (!busca_ficheros_SURF(fichero, surf_count)/*busca_ficheros_OBJ(fichero, surf_count)*/) {
-		mexPrintf("Error: calcula_Local_SH_FD: No encuentro ficheros SURF para calcular la Local SH-FD\n");
+		mexErrMsgTxt("Error: calcula_Local_SH_FD: No encuentro ficheros SURF para calcular la Local SH-FD\n");
 		return;
 	}
 
@@ -718,8 +728,9 @@ void surface_processing::calcula_fichero_Local_SH_FD_por_vertices(std::string fi
 	for(std::vector<sc_ele>::iterator it = surf_count.begin(); it != surf_count.end(); it++) {
 		/* convertir a DFS la malla SURF */
 		if (!convierte_SURF_a_DFS(it->fichero, recons[i])/*convierte_OBJ_a_DFS(it->fichero, recons[i])*/) {
-			mexPrintf("\nError: calcula_Local_SH_FD: No se puede convertir fichero %s a DFS\n", it->fichero);
-			exit(0);
+			std::string err = std::string("Error: calcula_Local_SH_FD: No se puede convertir fichero ") + it->fichero + std::string("\n");
+			mexErrMsgTxt(err.c_str());
+			return;
 		};
 
 		/* calcular el área de cada triángulo de la reconstrucción i */
@@ -1192,7 +1203,7 @@ void surface_processing::genera_STL_o_M(std::string fichero) {
 		fichero_m = fichero.substr(0,fichero.size()-5) + ".m";
 		fichero_land = fichero.substr(0,fichero.size()-5) + ".landmarkAscii";
 	} else {
-		mexPrintf("genera_STL: Error: solo se admiten fichero .DFS o .ETIQ");
+		mexErrMsgTxt("genera_STL: Error: solo se admiten fichero .DFS o .ETIQ");
 		return;
 	}
 
