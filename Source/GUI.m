@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 07-Jul-2018 21:40:36
+% Last Modified by GUIDE v2.5 12-Jul-2018 20:09:11
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -283,3 +283,11 @@ function configmenu_ClickedCallback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 Config
+
+
+% --------------------------------------------------------------------
+function uipushtool4_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to uipushtool4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+exitdialog
