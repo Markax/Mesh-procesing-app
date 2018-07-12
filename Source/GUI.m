@@ -199,7 +199,7 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
     hk_smooth_3dshfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_AREAS_SIN_SUAVIZAR.txt'), sigma, numiter);
     
     %Compute local SHFD
-    compute_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_',sigma,'_',numiter,'.txt'), int32(min_L_regression_Local), int32(max_L_regression_Local));
+    compute_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', int2str(sigma),'_', int2str(numiter),'.txt'), int32(min_L_regression_Local), int32(max_L_regression_Local));
     
     %Compute global SHFD
     compute_global_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf'), int32(min_L_regression_Global), int32(max_L_regression_Global));
