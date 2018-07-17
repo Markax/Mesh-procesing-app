@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 16-Jul-2018 18:19:52
+% Last Modified by GUIDE v2.5 17-Jul-2018 19:08:45
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -99,7 +99,7 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
                 set(handles.maxL,'visible','on');
                 set(handles.maxText,'visible','on');
                 set(handles.minText,'visible','on');
-                set(handles.uitoggletool4,'enable','on');
+                set(handles.screenbutton,'enable','on');
                 trisurf(obj.f , obj.v(:,1), obj.v(:,2), obj.v(:,3),'FaceColor',[0.26,0.33,1.0 ]);
                 shading interp
                 colormap gray(256);
@@ -124,6 +124,7 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
                 set(handles.maxL,'visible','on');
                 set(handles.maxText,'visible','on');
                 set(handles.minText,'visible','on');
+                set(handles.screenbutton,'enable','on');
                 trisurf(faces, vertex_coords(:,1), vertex_coords(:,2), vertex_coords(:,3),'FaceColor',[0.26,0.33,1.0 ]);
                 shading interp
                 colormap gray(256);
@@ -229,6 +230,11 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
     set(handles.Correlation, 'Visible', 'on');
     set(handles.text6, 'Visible', 'on');
     set(handles.text7, 'Visible', 'on');
+    set(handles.vrbutton, 'Visible', 'on');
+    
+    fvis = fopen('actualview.txt', 'w');
+    f
+    
     
     disp('Done');
 else 
@@ -328,3 +334,12 @@ global fpath;
 [filepath,name] = fileparts(fpath);
 
 print(strcat('../Screenshots/',name,'_Screenshot'), '-dpng');
+
+
+% --- Executes on button press in vrbutton.
+function vrbutton_Callback(hObject, eventdata, handles)
+% hObject    handle to vrbutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+rebuildsGUI;

@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 16-Jul-2018 18:19:52
+% Last Modified by GUIDE v2.5 17-Jul-2018 19:08:45
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -56,6 +56,10 @@ handles.output = hObject;
 
 % Update handles structure
 guidata(hObject, handles);
+
+%file reset
+fvis = fopen('actualview.txt', 'w');
+fclose(fvis);
 
 % UIWAIT makes GUI wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
@@ -174,6 +178,7 @@ min_L_regression_Local = str2double(fgetl(fid));
 max_L_regression_Local = str2double(fgetl(fid));
 min_L_regression_Global = str2double(fgetl(fid));
 max_L_regression_Global = str2double(fgetl(fid));
+fclose(fid);
 
 if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && min <= min_L_regression_Local && max >= max_L_regression_Local && min_L_regression_Global < max_L_regression_Global && min <= min_L_regression_Global && max >= max_L_regression_Global)
     addpath(genpath('spharm'));
@@ -230,6 +235,13 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
     set(handles.Correlation, 'Visible', 'on');
     set(handles.text6, 'Visible', 'on');
     set(handles.text7, 'Visible', 'on');
+    set(handles.vrbutton, 'Visible', 'on');
+    
+    fvis = fopen('actualview.txt', 'w');
+    fprintf(fvis, '%s /n', name);
+    fprintf(fvis, '%d /n', min);
+    fprintf(fvis, '%d', max);
+    fclose(fvis);
     
     disp('Done');
 else 
@@ -329,3 +341,12 @@ global fpath;
 [filepath,name] = fileparts(fpath);
 
 print(strcat('../Screenshots/',name,'_Screenshot'), '-dpng');
+
+
+% --- Executes on button press in vrbutton.
+function vrbutton_Callback(hObject, eventdata, handles)
+% hObject    handle to vrbutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+rebuildsGUI;

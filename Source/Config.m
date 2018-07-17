@@ -110,6 +110,7 @@ else
         fprintf(fid, '%d \n', maxLLocal);
         fprintf(fid, '%d \n', minLGlobal);
         fprintf(fid, '%d', maxLGlobal);
+        fclose(fid);
         close
     end
 end
