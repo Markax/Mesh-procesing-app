@@ -307,8 +307,12 @@ end;
 coord=surf.vertices;
 tri=surf.faces;
 
-trisurf(tri,coord(:,1), coord(:,2),coord(:,3),value);colorbar;
-colormap(color_map);
+if (value ~= -1)
+    trisurf(tri,coord(:,1), coord(:,2),coord(:,3),value);colorbar;
+    colormap(color_map);
+else
+    trisurf(tri,coord(:,1), coord(:,2),coord(:,3));
+end
 
 % utilizar la siguiente línea si se quiere un colormap que no incluya el
 % azul

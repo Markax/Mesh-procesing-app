@@ -33,35 +33,39 @@ surf.faces = f;
 num_vert = size(surf.vertices,1);
 
 % se leen los valores de local shfd para cada vértice de la superficie
-disp('Leyendo valores de shfd... ');
-output = zeros(num_vert, 1);
 
-fid = fopen(shfd, 'r') ;
-if (fid < 0)
-    disp(['visualiza_mapa_local_shfd: error, no puedo abrir el fichero con las shfd: ' shfd]);
-    return;
-end
-for vert = 1:num_vert
-    linea = fgetl(fid);
-    if (linea < 0)
-        disp('visualiza_mapa_local_shfd: error, número insuficiente de valores de shfd en el fichero');
+if (nargin > 1)
+    disp('Leyendo valores de shfd... ');
+    output = zeros(num_vert, 1);
+
+    fid = fopen(shfd, 'r') ;
+    if (fid < 0)
+        disp(['visualiza_mapa_local_shfd: error, no puedo abrir el fichero con las shfd: ' shfd]);
         return;
     end
-    fd = sscanf(linea,'%f');
-    output(vert,1) = fd(1);
+    for vert = 1:num_vert
+        linea = fgetl(fid);
+        if (linea < 0)
+            disp('visualiza_mapa_local_shfd: error, número insuficiente de valores de shfd en el fichero');
+            return;
+        end
+        fd = sscanf(linea,'%f');
+        output(vert,1) = fd(1);
+    end
+
+    linea = fgetl(fid);
+    if (linea ~= -1)
+        disp('visualiza_mapa_local_shfd: error, sobran valores de shfd en el fichero');
+        return;
+    end
+
+    fclose(fid);
+    disp('Terminado. Visualizando...');
+    % llama a código de Chung
+    figure_trimesh(surf,output,'rywb'); 
+else
+    figure_trimesh(surf,-1,'rywb');
 end
-
-linea = fgetl(fid);
-if (linea ~= -1)
-    disp('visualiza_mapa_local_shfd: error, sobran valores de shfd en el fichero');
-    return;
-end
-
-fclose(fid);
-
-disp('Terminado. Visualizando...');
-% llama a código de Chung
-figure_trimesh(surf,output,'rywb'); 
 end
 
 function [vertices, faces] = LeerMFile(fname)

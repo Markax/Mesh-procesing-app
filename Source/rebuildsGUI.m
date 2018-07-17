@@ -59,16 +59,19 @@ handles.output = hObject;
 % Update handles structure
 guidata(hObject, handles);
 
-global name
+global fpath;
 global minL;
 global maxL;
-fvis('actualview.txt');
-name = fgetl(fvis);
+global actualL;
+[filepath, name] = fileparts(fpath);
+fvis = fopen('actualview.txt');
+fpath = fgetl(fvis);
 minL = fgetl(fvis);
 maxL = fgetl(fvis);
 fclose(fvis);
+actualL = minL;
 
-visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf'));
+visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_',actualL,'_0_des_orig.surf'));
 
 % UIWAIT makes rebuildsGUI wait for user response (see UIRESUME)
 % uiwait(handles.figure1);

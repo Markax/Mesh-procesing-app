@@ -238,8 +238,8 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
     set(handles.vrbutton, 'Visible', 'on');
     
     fvis = fopen('actualview.txt', 'w');
-    fprintf(fvis, '%s /n', name);
-    fprintf(fvis, '%d /n', min);
+    fprintf(fvis, '%s \n', fpath);
+    fprintf(fvis, '%d \n', min);
     fprintf(fvis, '%d', max);
     fclose(fvis);
     
@@ -257,7 +257,7 @@ else
     if (isnan(max))
         errordlg('Error: Max L value must be a interger number', 'Max Value Error');
     end
-    if (min_L_regression > max_L_regression)
+    if (min_L_regression_Local > max_L_regression_Local || min_L_regression_Global > max_L_regression_Global)
         errordlg('Error: Max L Regression must be greater than Min L Regression', 'Regression Value Error');
     end
     if (min > min_L_regression_Local || min > min_L_regression_Global)
@@ -267,8 +267,6 @@ else
         errordlg('Error: Max L value must be greater than Max L Regression value', 'Regression Value Error');
     end
 end
-
-
 
 
 function maxL_Callback(hObject, eventdata, handles)
