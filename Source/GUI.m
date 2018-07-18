@@ -335,8 +335,32 @@ function screenbutton_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to screenbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+set(handles.GlobalSHFD, 'Visible', 'off');
+set(handles.Correlation, 'Visible', 'off');
+set(handles.text6, 'Visible', 'off');
+set(handles.text7, 'Visible', 'off');
+set(handles.vrbutton, 'Visible', 'off');
+set(handles.MFileButton,'visible','off');
+set(handles.minL,'visible','off');
+set(handles.maxL,'visible','off');
+set(handles.maxText,'visible','off');
+set(handles.minText,'visible','off');
+set(handles.screenbutton,'enable','off');
+    
 [file,path] = uiputfile('*.png');
 print(strcat(path,file), '-dpng');
+
+set(handles.GlobalSHFD, 'Visible', 'on');
+set(handles.Correlation, 'Visible', 'on');
+set(handles.text6, 'Visible', 'on');
+set(handles.text7, 'Visible', 'on');
+set(handles.vrbutton, 'Visible', 'on');
+set(handles.MFileButton,'visible','on');
+set(handles.minL,'visible','on');
+set(handles.maxL,'visible','on');
+set(handles.maxText,'visible','on');
+set(handles.minText,'visible','on');
+set(handles.screenbutton,'enable','on');
 
 
 % --- Executes on button press in vrbutton.
