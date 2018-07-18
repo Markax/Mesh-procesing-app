@@ -57,8 +57,9 @@ handles.output = hObject;
 % Update handles structure
 guidata(hObject, handles);
 
+addpath(genpath('../Config'));
 %file reset
-fvis = fopen('actualview.txt', 'w');
+fvis = fopen('../Config/actualview.txt', 'w');
 fclose(fvis);
 
 % UIWAIT makes GUI wait for user response (see UIRESUME)
@@ -171,7 +172,7 @@ function MFileButton_Callback(hObject, eventdata, handles)
 
 min = str2double(get(handles.minL, 'String'));
 max = str2double(get(handles.maxL, 'String'));
-fid = fopen('config.txt');
+fid = fopen('../Config/config.txt');
 sigma = str2double(fgetl(fid));
 numiter = str2double(fgetl(fid));
 min_L_regression_Local = str2double(fgetl(fid));
