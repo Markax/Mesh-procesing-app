@@ -64,7 +64,7 @@ if (nargin > 1)
     % llama a código de Chung
     figure_trimesh(surf,output,'rywb'); 
 else
-    figure_trimesh(surf,-1,'rywb');
+    figure_trimesh(surf,-1,'gray');
 end
 end
 

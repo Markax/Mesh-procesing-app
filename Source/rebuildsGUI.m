@@ -72,6 +72,7 @@ fclose(fvis);
 actualL = minL;
 
 visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_',actualL,'_0_des_orig.surf'));
+rotate3d on;
 
 % UIWAIT makes rebuildsGUI wait for user response (see UIRESUME)
 % uiwait(handles.figure1);

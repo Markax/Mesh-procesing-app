@@ -300,9 +300,9 @@ switch cmap
         color_map=rywb;
     case 'mwg'
         color_map=mwg;
-end;
-
-
+    case 'gray'
+        color_map=gray;
+end
 
 coord=surf.vertices;
 tri=surf.faces;
@@ -312,6 +312,7 @@ if (value ~= -1)
     colormap(color_map);
 else
     trisurf(tri,coord(:,1), coord(:,2),coord(:,3));
+    colormap(color_map);
 end
 
 % utilizar la siguiente línea si se quiere un colormap que no incluya el
