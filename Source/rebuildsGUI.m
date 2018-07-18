@@ -22,7 +22,7 @@ function varargout = rebuildsGUI(varargin)
 
 % Edit the above text to modify the response to help rebuildsGUI
 
-% Last Modified by GUIDE v2.5 17-Jul-2018 19:04:27
+% Last Modified by GUIDE v2.5 18-Jul-2018 23:31:32
 
 % Begin initialization code - DO NOT EDIT
 
@@ -66,12 +66,12 @@ global actualL;
 [filepath, name] = fileparts(fpath);
 fvis = fopen('actualview.txt');
 fpath = fgetl(fvis);
-minL = fgetl(fvis);
-maxL = fgetl(fvis);
+minL = str2double(fgetl(fvis));
+maxL = str2double(fgetl(fvis));
 fclose(fvis);
 actualL = minL;
 
-visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_',actualL,'_0_des_orig.surf'));
+visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_',int2str(actualL),'_0_des_orig.surf'));
 rotate3d on;
 
 % UIWAIT makes rebuildsGUI wait for user response (see UIRESUME)
@@ -87,3 +87,47 @@ function varargout = rebuildsGUI_OutputFcn(hObject, eventdata, handles)
 
 % Get default command line output from handles structure
 varargout{1} = handles.output;
+
+
+% --------------------------------------------------------------------
+function nextBut_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to nextBut (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global actualL;
+global fpath;
+global maxL;
+[filepath, name] = fileparts(fpath);
+
+L = actualL;
+L = L+1;
+%clear(actualL)
+actualL = L;
+
+set(handles.previousBut, 'Enable', 'on');
+if (actualL == maxL)
+    set(handles.nextBut, 'Enable', 'off');
+end
+
+visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_',int2str(actualL),'_0_des_orig.surf'));
+
+
+
+
+% --------------------------------------------------------------------
+function previousBut_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to previousBut (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global actualL;
+global fpath;
+global minL;
+[filepath, name] = fileparts(fpath);
+
+actualL = actualL - 1;
+set(handles.nextBut, 'Enable', 'on');
+if (actualL == minL)
+    set(handles.previousBut, 'Enable', 'off');
+end
+
+visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_',int2str(actualL),'_0_des_orig.surf'));
