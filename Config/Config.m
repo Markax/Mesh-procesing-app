@@ -60,7 +60,7 @@ guidata(hObject, handles);
 
 % UIWAIT makes Config wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
-fid = fopen('config.txt');
+fid = fopen('../Config/config.txt');
 sigma = fgetl(fid);
 numiter = fgetl(fid);
 minLregressLocal = fgetl(fid);
@@ -103,7 +103,7 @@ else
     if ( minLLocal >= maxLLocal || minLGlobal >= maxLGlobal )
         errordlg('"max L regression" value must be greater than "min L regression"', 'Value error');
     else
-        fid = fopen('config.txt', 'w');
+        fid = fopen('../Config/config.txt', 'w');
         fprintf(fid, '%d \n', sigma);
         fprintf(fid, '%d \n', numiter);
         fprintf(fid, '%d \n', minLLocal);
