@@ -1089,10 +1089,10 @@ void surface_processing::calcula_Global_SH_FD(std::string fichero, int l_ini, in
 	/* Para cada reconstruccion SH en formato SURF, hay que pasarla a formato DFS y calcular el 
            área de la superficie */
 	for(std::vector<sc_ele>::iterator it = surf_count.begin(); it != surf_count.end(); it++) {
-		mexPrintf("Leyendo superficie: %s\n", it->fichero);
+		mexPrintf("Leyendo superficie: %s\n", it->fichero.c_str());
 		/* convertir a DFS la malla SURF */
 		if (!convierte_SURF_a_DFS(it->fichero, recons)/*convierte_OBJ_a_DFS(it->fichero, recons)*/) {
-			mexPrintf("\nNo se puede convertir fichero %s a DFS\n", it->fichero);
+			mexPrintf("\nNo se puede convertir fichero %s a DFS\n", it->fichero.c_str());
 			exit(0);
 		};
 
@@ -1160,6 +1160,13 @@ void surface_processing::calcula_Global_SH_FD(std::string fichero, int l_ini, in
                 fprintf(fs, "#Fractal dimension (a) - b - error_a - error_b - r  \n"); 
    		/* se graba en formato a b error_a error_b r */
 		fprintf(fs,"%f\t%f\t%f\t%f\t%f\n", a, b, error_a, error_b, r);
+
+		/* se graban las áreas de cada superficie */
+    fprintf(fs, "#Area of each reconstruction\n");
+		for(std::vector<sc_ele>::iterator it = surf_count.begin(); it != surf_count.end(); it++) {
+			fprintf(fs,"%f ", it->area);
+		}
+		fprintf(fs,"\n");
 		fclose(fs);
 						
 		/* se graba a disco el resultado del surface-counting */
