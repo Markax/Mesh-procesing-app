@@ -107,7 +107,6 @@ L = L+1;
 actualL = L;
 
 visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_',int2str(actualL),'_0_des_orig.surf'));
-
 set(handles.text2, 'String', strcat('Reconstructions for L=', int2str(actualL)));
 
 set(handles.previousBut, 'Enable', 'on');
@@ -134,14 +133,12 @@ global minL;
 [filepath, name] = fileparts(fpath);
 
 actualL = actualL - 1;
-
-visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_',int2str(actualL),'_0_des_orig.surf'));
-
-set(handles.text2, 'String', strcat('Reconstructions for L=', int2str(actualL)));
-
 set(handles.nextBut, 'Enable', 'on');
 if (actualL == minL)
     set(handles.previousBut, 'Enable', 'off');
 else
     set(handles.previousBut, 'Enable', 'on');
 end
+
+visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_',int2str(actualL),'_0_des_orig.surf'));
+set(handles.text2, 'String', strcat('Reconstructions for L=', int2str(actualL)));
