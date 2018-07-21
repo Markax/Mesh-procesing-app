@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 17-Jul-2018 19:08:45
+% Last Modified by GUIDE v2.5 21-Jul-2018 21:22:12
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -109,7 +109,6 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
                 shading interp
                 colormap gray(256);
                 lighting phong;
-                %light('Position',[-1 0 0],'Style','local');
                 camproj('perspective');
                 axis square; 
                 axis off;
@@ -134,7 +133,6 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
                 shading interp
                 colormap gray(256);
                 lighting phong;
-                %light('Position',[-1 0 0],'Style','local');
                 camproj('perspective');
                 axis square; 
                 axis off;
@@ -237,8 +235,10 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
     set(handles.text6, 'Visible', 'on');
     set(handles.text7, 'Visible', 'on');
     set(handles.vrbutton, 'Visible', 'on');
+    set(handles.pushbutton4,'visible','on');
+    set(handles.pushbutton5,'visible','on');
     
-    fvis = fopen('actualview.txt', 'w');
+    fvis = fopen('../Config/actualview.txt', 'w');
     fprintf(fvis, '%s \n', fpath);
     fprintf(fvis, '%d \n', min);
     fprintf(fvis, '%d', max);
@@ -371,3 +371,19 @@ function vrbutton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 rebuildsGUI;
+
+
+% --- Executes on button press in pushbutton4.
+function pushbutton4_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+Fractal_Dimension_3D_GLOBAL;
+
+
+% --- Executes on button press in pushbutton5.
+function pushbutton5_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton5 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+Fractal_Dimension_3D_LOCAL;

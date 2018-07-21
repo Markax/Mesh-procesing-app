@@ -64,7 +64,7 @@ global minL;
 global maxL;
 global actualL;
 [filepath, name] = fileparts(fpath);
-fvis = fopen('actualview.txt');
+fvis = fopen('../Config/actualview.txt');
 fpath = fgetl(fvis);
 minL = str2double(fgetl(fvis));
 maxL = str2double(fgetl(fvis));

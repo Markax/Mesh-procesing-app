@@ -2,7 +2,7 @@ function m_file = generate_m(fname)
 
 [filepath,name,ext] = fileparts(fname);
 
-wb = waitbar(0, 'Generating M File...  (1/4)', 'Name', 'Generating Spherical Harmonics');
+wb = waitbar(0, 'Generating M File...  (1/5)', 'Name', 'Generating Spherical Harmonics');
 if (isequal(ext, '.obj'))
     % Generacion de ficheros m y land 
     
