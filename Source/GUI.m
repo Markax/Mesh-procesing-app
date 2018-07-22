@@ -215,9 +215,9 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
     
     fset = fopen(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_GLOBAL_SHFD_',int2str(min_L_regression_Global),'_',int2str(max_L_regression_Global),'.txt'));
     
-     A = fgetl(fset);
+    A = fgetl(fset);
     
-    while ischar(A)
+    for i=1:3
         A = fgets(fset);
         if (A~=-1)
             B = fscanf(fset, '%f');
@@ -386,4 +386,4 @@ function pushbutton5_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton5 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-Fractal_Dimension_3D_LOCAL;
+FractalDimensionLocal;

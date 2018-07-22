@@ -1,26 +1,41 @@
 fid = fopen('../Config/config.txt');
-for i = 1:5
-   ini = fgetl(fid); 
-end
-fin = fgetl(fid);
+
+sigma = fgetl(fid);
+numiter = fgetl(fid);
+ini = str2double(fgetl(fid)); 
+fin = str2double(fgetl(fid));
+ini = str2double(fgetl(fid)); 
+fin = str2double(fgetl(fid));
 
 fid2 = fopen('../Config/actualview.txt');
 
 fpath = fgetl(fid2);
-[filepath,name] = fileparts(file);
-min_L = fgetl(fid2);
-max_L = fgetl(fid2);
+[filepath,name] = fileparts(fpath);
+min_L = str2double(fgetl(fid2));
+max_L = str2double(fgetl(fid2));
+rec = max_L-min_L;
 
-% log-log plot of the box-counting
-n = [22665.243205 23166.358735 25291.866288 26023.926689 27698.095954 29017.875820 30405.418628 32279.063440 33912.124651 35958.074228 38086.999948 39623.667812 41405.388462 43595.654621 45804.486592 47708.087064 49077.381759 51513.889826 53341.347412 55159.069634 56938.919835 58306.636297 59675.127142 60902.453939 61927.669000];
-%r = [1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16	17	18	19	20	21	22	23	24	25];
-r=[str2double(min_L)]
-for i=str2double(min_L)+1:str2double(max_L)
-    r=[r, i];
+r = zeros(1, rec);
+for i=min_L:max_L
+    r(1,i) = i;
 end
 
-display(r);
+n = zeros(1, rec);
 
+ disp(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_GLOBAL_SHFD_',int2str(ini),'_',int2str(fin),'.txt'));
+f_area = fopen(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_GLOBAL_SHFD_',int2str(ini),'_',int2str(fin),'.txt'));
+
+A = fgetl(f_area);
+    
+while ischar(A)
+    A = fgetl(f_area);
+    if (A~=-1)
+        B = fscanf(f_area, '%f');
+    end
+end
+
+n = B(1:rec+1);
+n = n'
 % NORMALIZANDO 
 n = n / n(max(r)); % normaliza en base al área de la reconstrucción con l máxima
 

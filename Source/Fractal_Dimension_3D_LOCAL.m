@@ -14,13 +14,15 @@ max_L = fgetl(fid2);
 
 disp(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', sigma,'_', numiter,'.txt'))
 fvert = fopen(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', sigma,'_', numiter,'.txt'));
-rec = fgetl(fvert);
-n_vert = fgetl(fvert);
+rec = str2double(fgetl(fvert));
+n_vert = str2double(fgetl(fvert));
 
 B = fscanf(fvert, '%f');
-disp(B(2:2));
-n = [B(1:1) B(1+1:1+1) B(1+2:1+2) B(1+3:1+3) B(1+4:1+4)];
 
+n = zeros(1, rec);
+for i=1:rec
+   n(1,i) = B(i,1); 
+end
 
 %for i=1:str2double(max_L)
  %   n = [n, A(i:1)];
@@ -33,10 +35,9 @@ n = [B(1:1) B(1+1:1+1) B(1+2:1+2) B(1+3:1+3) B(1+4:1+4)];
 
 
 
-
-r=[str2double(min_L)];
-for i=str2double(min_L)+1:str2double(max_L)
-    r=[r, i];
+r = zeros(1, rec);
+for i=str2double(min_L):str2double(max_L)
+    r(1,i) = i;
 end
 
 % NORMALIZANDO 
