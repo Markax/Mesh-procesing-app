@@ -101,14 +101,14 @@ global fpath;
 global maxL;
 [filepath, name] = fileparts(fpath);
 
-L = actualL;
-L = L+1;
-%clear(actualL)
-actualL = L;
+camp = campos;
+actualL = actualL + 1;
 
 visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_',int2str(actualL),'_0_des_orig.surf'));
 
-set(handles.text2, 'String', strcat('Reconstructions for L=', int2str(actualL)));
+set(handles.text2, 'String', strcat('Reconstruction for L=', int2str(actualL)));
+
+campos(camp);
 
 set(handles.previousBut, 'Enable', 'on');
 if (actualL == maxL)
@@ -133,11 +133,14 @@ global fpath;
 global minL;
 [filepath, name] = fileparts(fpath);
 
+camp = campos;
 actualL = actualL - 1;
 
 visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_',int2str(actualL),'_0_des_orig.surf'));
 
-set(handles.text2, 'String', strcat('Reconstructions for L=', int2str(actualL)));
+set(handles.text2, 'String', strcat('Reconstruction for L=', int2str(actualL)));
+
+campos(camp);
 
 set(handles.nextBut, 'Enable', 'on');
 if (actualL == minL)
