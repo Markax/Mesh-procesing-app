@@ -24,7 +24,7 @@ waitbar(1/5, wb, 'Generating M File... (1/5)');
 
 if (isequal(ext, '.obj'))
     fid = fopen(fichero_m,'w');
-    s = readObj(fname);
+    s = readObj(fname, 1);
     
     % Header 
     fprintf(fid, '%% Superficie generada a partir de un fichero .obj \n');

@@ -32,7 +32,6 @@ function [currentDir] = BATCH_MLMakeTemplate(currentDir, x, y)
 
 disp('INSIDE MLMakeTemplate');
 
-wb = waitbar(0, 'Making Template...  (3/6)', 'Name', 'Generating Spherical Harmonics');
 
 smooth = x;
 degree = double(y); % para evitar problemas de tipos de datos en llamada desde mex
@@ -67,8 +66,6 @@ load(fullFileName);
 % % reclaim space from surface
 % clear surface;
 
-waitbar(1/4, wb, 'Making Template...  (3/5)');
-
 disp(['processing ' name]);
 
 %-------------------------------------------------
@@ -77,15 +74,18 @@ disp(['processing ' name]);
 % If smooth =0 the algorithm assumes that the user has loaded the
 % *_smo.mat" file here.
 if (smooth == 1)
+    wb = waitbar(0, 'Making Template...  (3/6)', 'Name', 'Generating Spherical Harmonics');
     name = ['template_' name];
     new_name = [name '_smo.mat']; 
     % dateline, mesh_landmarks, metric just used for debugging by Li
     %[sph_verts, vertices, faces, dateline, mesh_landmarks, metric] = ...
 	%		smooth_surface(maxfn, switchcc, vertices, faces, name);
-    waitbar(2/4, wb, 'Making Template...  (3/5)');
+    waitbar(1/2, wb, 'Making Template...  (3/5)');
     [sph_verts, vertices, faces, dateline, mesh_landmarks, metric] = ...
 			smooth_surface(maxfn, switchcc, vertices, faces, fullFileName);
 	save(fullfile(currentDir, new_name), 'sph_verts', 'vertices', 'faces', 'dateline', 'landmarks', 'metric');     
+    waitbar(1, wb, 'Making Template... (3/5)');
+    close(wb);
 else
     % find out if file name ends in '_smo' and if so remove this.
     endName = name(end-3:end);
@@ -115,8 +115,6 @@ dg = [0 info(1)];
 [fvec, d] = spharm_vec(evs, svs, info(1));
 dg(2) = d;
 
-waitbar(3/4, wb, 'Making Template...  (3/5)');
-
 % This file stores the following variables:
 % 	fvec: vector of spherical harmonic coefficients of size (info(1,1)+1)^2
 % 	sph_verts: vertices on the unit sphere
@@ -129,12 +127,9 @@ save(fullfile(currentDir,new_name), 'fvec', 'sph_verts', 'vertices', 'faces', 'l
 
 disp('MLMakeTemplate finished.');
 
-waitbar(1, wb, 'Making Template...  (3/5)');
 
 %currentDir = new_name;
 currentDir = fullfile(currentDir, new_name);
-
-close(wb);
 
 return;
 

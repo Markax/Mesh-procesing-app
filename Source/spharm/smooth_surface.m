@@ -67,6 +67,7 @@ function [sph_verts, vertices, faces, dateline, landmarks, metric] = smooth_surf
 	%  07/10/2007
 
 	%disp('*********** Smoothing Surface ***********');
+    
 	for k=1:3
 		info = str2num('50 6 2 2 100 10 1');
 		reso = info(6); tmajor=info(7);
@@ -108,8 +109,7 @@ function [sph_verts, vertices, faces, dateline, landmarks, metric] = smooth_surf
 	        if (mstch<1.001 || count>=3) 
 				break; 
 			end
-		end
-	
+        end
 	    sph_verts = verts;
 	    metric = get_metric([name '_infile_metric'],11);
 	    seconds = cputime - t;
@@ -126,6 +126,6 @@ function [sph_verts, vertices, faces, dateline, landmarks, metric] = smooth_surf
 	        %disp('Not good enough, continue.');
             disp('');
 		end
-	end
+    end
 return;
 

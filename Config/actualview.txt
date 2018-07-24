@@ -1,1 +1,3 @@
- 
+C:\Users\Markax\Desktop\Mesh-processing-app\Models\lh_sim_10K.obj 
+1 
+15

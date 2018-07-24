@@ -3,13 +3,13 @@ function BATCH_genera_reconstrucciones(modelo_suavizado,inicio,fin)
     % smoothing hecho (template_*_OL_2O_CS_smo.mat o template_*_OL_2O_smo.mat) genera las
     % reconstrucciones desde el grado "inicio" al grado "fin"
     
-    wb = waitbar(0, 'Rebuilding...  (4/5)', 'Name', 'Generating Spherical Harmonics');
+    wb = waitbar(0, 'Generating reconstructions...  (4/5)', 'Name', 'Generating Spherical Harmonics');
     
     inicio = double(inicio); % para evitar problemas de tiepos de datos al llamar desde funcion mex
     fin = double(fin); % para evitar problemas de tiepos de datos al llamar desde funcion mex
 
     for i = inicio:fin
-        waitbar(i/fin, wb, 'Rebuilding...  (4/5)');
+        waitbar(i/fin, wb, 'Generating reconstructions...  (4/5)');
         res = BATCH_MLMakeTemplate(modelo_suavizado, 0, i);
         res = BATCH_MLMakeModels(res, modelo_suavizado, 0, i, 0);
         BATCH_MLMakeSurfacesFromSPHARMModels(res, 0, 'Amira');

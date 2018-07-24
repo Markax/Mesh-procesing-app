@@ -31,7 +31,7 @@ it = 0;
 ib = 0;
 
 %waitbar
-if ( nargin == 1)
+if ( nargin > 1)
     wb = waitbar(ib, 'Loading mesh file...', 'Name', 'Loading');
 end
 
@@ -41,7 +41,7 @@ while 1
       if (it == w)
           it = 0;
           ib = ib+0.01;
-          if ( nargin == 1)
+          if ( nargin > 1)
             waitbar(ib, wb, 'Loading mesh file...');
           end
       end
@@ -80,7 +80,7 @@ while 1
     end
 end
 fclose(fid);
-if ( nargin == 1)
+if ( nargin > 1)
     waitbar(1, wb, 'Loading mesh file...');
   
     close(wb);
