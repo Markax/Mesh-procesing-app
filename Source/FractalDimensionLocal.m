@@ -83,13 +83,14 @@ disp(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.sur
 fvert = fopen(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', sigma,'_', numiter,'.txt'));
 global rec 
 rec = str2double(fgetl(fvert));
+global n_vert
 n_vert = str2double(fgetl(fvert));
 
-act_vert = round(rec/2);
-set(handles.slider1, 'Max', rec);
+act_vert = round(n_vert/2);
+set(handles.slider1, 'Max', n_vert);
 set(handles.slider1, 'Value', round(act_vert));
 set(handles.text3, 'String', round(act_vert));
-set(handles.slider1, 'SliderStep', [1/(act_vert-1), 0.1])
+set(handles.slider1, 'SliderStep', [1/(n_vert), 0.1])
 
 global VValues;
 VValues = fscanf(fvert, '%f');

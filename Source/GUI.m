@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 21-Jul-2018 21:22:12
+% Last Modified by GUIDE v2.5 24-Jul-2018 18:32:00
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -237,6 +237,7 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
     set(handles.vrbutton, 'Visible', 'on');
     set(handles.pushbutton4,'visible','on');
     set(handles.pushbutton5,'visible','on');
+    set(handles.configmenu,'enable','on');
     
     fvis = fopen('../Config/actualview.txt', 'w');
     fprintf(fvis, '%s \n', fpath);
@@ -387,3 +388,70 @@ function pushbutton5_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 FractalDimensionLocal;
+
+
+% --- Executes on button press in selectmeshb.
+function selectmeshb_Callback(hObject, eventdata, handles)
+% hObject    handle to selectmeshb (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+[file,path] = uigetfile('../Models/*.*');
+[filepath,name,ext] = fileparts(file);
+            if isequal(file,0)
+               disp('User selected Cancel');
+            else
+               global fpath;
+               fpath = fullfile(path,file);
+               disp(['User selected ', fullfile(path,file)]);
+            end
+            if (isequal(ext, '.obj'))
+                obj = readObj(fullfile(path,file));
+                set(handles.uipushtool2,'enable','on');
+                set(handles.uitoggletool1,'enable','on');
+                set(handles.uitoggletool3,'enable','on');
+                set(handles.uitoggletool4,'enable','on');
+                set(handles.MFileButton,'visible','on');
+                set(handles.minL,'visible','on');
+                set(handles.maxL,'visible','on');
+                set(handles.maxText,'visible','on');
+                set(handles.minText,'visible','on');
+                set(handles.screenbutton,'enable','on');
+                set(handles.selectmeshb,'visible','off');
+                trisurf(obj.f , obj.v(:,1), obj.v(:,2), obj.v(:,3),'FaceColor',[0.26,0.33,1.0 ]);
+                shading interp
+                colormap gray(256);
+                lighting phong;
+                camproj('perspective');
+                axis square; 
+                axis off;
+                axis equal;
+                axis tight;  
+                camlight('headlight')
+                cameratoolbar;
+                rotate3d on;
+            else
+                [vertex_coords, faces] = read_freesurfer_surf(fullfile(path,file));
+                set(handles.uipushtool2,'enable','on');
+                set(handles.uitoggletool1,'enable','on');
+                set(handles.uitoggletool3,'enable','on');
+                set(handles.uitoggletool4,'enable','on');
+                set(handles.MFileButton,'visible','on');
+                set(handles.minL,'visible','on');
+                set(handles.maxL,'visible','on');
+                set(handles.maxText,'visible','on');
+                set(handles.minText,'visible','on');
+                set(handles.screenbutton,'enable','on');
+                set(handles.selectmeshb,'visible','off');
+                trisurf(faces, vertex_coords(:,1), vertex_coords(:,2), vertex_coords(:,3),'FaceColor',[0.26,0.33,1.0 ]);
+                shading interp
+                colormap gray(256);
+                lighting phong;
+                camproj('perspective');
+                axis square; 
+                axis off;
+                axis equal;
+                axis tight;
+                camlight('headlight');
+                cameratoolbar;
+                rotate3d on;
+            end
