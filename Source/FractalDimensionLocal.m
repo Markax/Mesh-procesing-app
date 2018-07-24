@@ -22,7 +22,7 @@ function varargout = FractalDimensionLocal(varargin)
 
 % Edit the above text to modify the response to help FractalDimensionLocal
 
-% Last Modified by GUIDE v2.5 22-Jul-2018 21:35:41
+% Last Modified by GUIDE v2.5 24-Jul-2018 22:41:08
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -75,9 +75,9 @@ fid2 = fopen('../Config/actualview.txt');
 fpath = fgetl(fid2);
 [filepath,name] = fileparts(fpath);
 global min_L;
-min_L = fgetl(fid2);
+min_L = str2double(fgetl(fid2));
 global max_L;
-max_L = fgetl(fid2);
+max_L = str2double(fgetl(fid2));
 
 disp(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', sigma,'_', numiter,'.txt'))
 fvert = fopen(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', sigma,'_', numiter,'.txt'));
@@ -91,6 +91,18 @@ set(handles.slider1, 'Max', n_vert);
 set(handles.slider1, 'Value', round(act_vert));
 set(handles.text3, 'String', round(act_vert));
 set(handles.slider1, 'SliderStep', [1/(n_vert), 0.1])
+
+set(handles.slider2, 'Min', min_L);
+set(handles.slider2, 'Max', max_L);
+set(handles.slider2, 'Value', round(ini));
+set(handles.text6, 'String', round(ini));
+set(handles.slider2, 'SliderStep', [1/(max_L-min_L), 0.1])
+
+set(handles.slider3, 'Min', min_L);
+set(handles.slider3, 'Max', max_L);
+set(handles.slider3, 'Value', round(fin));
+set(handles.text7, 'String', round(fin));
+set(handles.slider3, 'SliderStep', [1/(max_L-min_L), 0.1])
 
 global VValues;
 VValues = fscanf(fvert, '%f');
@@ -112,7 +124,7 @@ end
 
 
 r = zeros(1, rec);
-for i=str2double(min_L):str2double(max_L)
+for i=min_L:max_L
     r(1,i) = i;
 end
 
@@ -183,12 +195,18 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+if ( get(handles.slider3, 'Value') <= get(handles.slider2, 'Value') )
+    errordlg('Max L value must be greater than Min L value');
+else
+
 global rec;
 global VValues;
 global min_L;
 global max_L;
 global ini;
+ini = get(handles.slider2, 'Value')
 global fin;
+fin = get(handles.slider3, 'Value')
 act_vert = get(handles.slider1, 'Value');
 
 n = zeros(1, rec);
@@ -197,7 +215,7 @@ for i=1:rec
 end
 
 r = zeros(1, rec);
-for i=str2double(min_L):str2double(max_L)
+for i=min_L:max_L
     r(1,i) = i;
 end
 
@@ -223,3 +241,57 @@ corr = 1 - sum((Nr - y).^2) / sum((Nr - mean(Nr)).^2); % correlation
  
 % plots the regression line and the fractal dimension results
 plot(Rr, y, 'r', 'LineWidth', 3);
+end
+
+% --------------------------------------------------------------------
+function uipushtool1_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to uipushtool1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+close
+
+
+% --- Executes on slider movement.
+function slider2_Callback(hObject, eventdata, handles)
+% hObject    handle to slider2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+set(handles.text6, 'String', round(get(handles.slider2, 'Value')));
+
+
+% --- Executes during object creation, after setting all properties.
+function slider2_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to slider2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+
+
+% --- Executes on slider movement.
+function slider3_Callback(hObject, eventdata, handles)
+% hObject    handle to slider3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+set(handles.text7, 'String', round(get(handles.slider3, 'Value')));
+
+
+% --- Executes during object creation, after setting all properties.
+function slider3_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to slider3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end

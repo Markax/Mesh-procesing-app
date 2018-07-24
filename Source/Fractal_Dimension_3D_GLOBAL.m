@@ -35,7 +35,7 @@ while ischar(A)
 end
 
 n = B(1:rec+1);
-n = n'
+n = n';
 % NORMALIZANDO 
 n = n / n(max(r)); % normaliza en base al área de la reconstrucción con l máxima
 
