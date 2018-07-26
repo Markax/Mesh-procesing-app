@@ -80,11 +80,11 @@ if (smooth == 1)
     % dateline, mesh_landmarks, metric just used for debugging by Li
     %[sph_verts, vertices, faces, dateline, mesh_landmarks, metric] = ...
 	%		smooth_surface(maxfn, switchcc, vertices, faces, name);
-    waitbar(1/2, wb, 'Making Template...  (3/5)');
+    waitbar(1/2, wb, 'Making Template...  (3/6)');
     [sph_verts, vertices, faces, dateline, mesh_landmarks, metric] = ...
 			smooth_surface(maxfn, switchcc, vertices, faces, fullFileName);
 	save(fullfile(currentDir, new_name), 'sph_verts', 'vertices', 'faces', 'dateline', 'landmarks', 'metric');     
-    waitbar(1, wb, 'Making Template... (3/5)');
+    waitbar(1, wb, 'Making Template... (3/6)');
     close(wb);
 else
     % find out if file name ends in '_smo' and if so remove this.

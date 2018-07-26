@@ -229,12 +229,14 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
     %HK_Smooth
     hk_smooth_3dshfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_AREAS_SIN_SUAVIZAR.txt'), sigma, numiter);
     
+    wb = waitbar(0, 'Computing SHFD values...  (6/6)', 'Name', 'Generating Spherical Harmonics');
     %Compute local SHFD
     compute_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', int2str(sigma),'_', int2str(numiter),'.txt'), int32(min_L_regression_Local), int32(max_L_regression_Local));
-    
+    waitbar(1/2, wb, 'Computing SHFD values...  (6/6)');
     %Compute global SHFD
     compute_global_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf'), int32(min_L_regression_Global), int32(max_L_regression_Global));
-    
+    waitbar(1, wb, 'Computing SHFD values...  (6/6)');
+    close(wb);
     %Visualice local map SHFD
     visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\',name,'.m'), strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_',int2str(sigma),'_',int2str(numiter),'.local_shfd_',int2str(min_L_regression_Local),'_',int2str(max_L_regression_Local),'.txt'));
     
