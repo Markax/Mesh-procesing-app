@@ -79,7 +79,6 @@ min_L = str2double(fgetl(fid2));
 global max_L;
 max_L = str2double(fgetl(fid2));
 
-disp(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', sigma,'_', numiter,'.txt'))
 fvert = fopen(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', sigma,'_', numiter,'.txt'));
 global rec 
 rec = str2double(fgetl(fvert));
@@ -204,9 +203,9 @@ global VValues;
 global min_L;
 global max_L;
 global ini;
-ini = get(handles.slider2, 'Value')
+ini = get(handles.slider2, 'Value');
 global fin;
-fin = get(handles.slider3, 'Value')
+fin = get(handles.slider3, 'Value');
 act_vert = get(handles.slider1, 'Value');
 
 n = zeros(1, rec);
