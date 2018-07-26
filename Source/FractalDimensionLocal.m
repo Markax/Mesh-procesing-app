@@ -87,18 +87,24 @@ n_vert = str2double(fgetl(fvert));
 
 act_vert = round(n_vert/2);
 set(handles.slider1, 'Max', n_vert);
+set(handles.text14, 'String', n_vert);
+set(handles.text13, 'String', '1');
 set(handles.slider1, 'Value', round(act_vert));
 set(handles.text3, 'String', round(act_vert));
 set(handles.slider1, 'SliderStep', [1/(n_vert), 0.1])
 
 set(handles.slider2, 'Min', min_L);
+set(handles.text8, 'String', min_L);
 set(handles.slider2, 'Max', max_L);
+set(handles.text9, 'String', max_L);
 set(handles.slider2, 'Value', round(ini));
 set(handles.text6, 'String', round(ini));
 set(handles.slider2, 'SliderStep', [1/(max_L-min_L), 0.1])
 
 set(handles.slider3, 'Min', min_L);
+set(handles.text10, 'String', min_L);
 set(handles.slider3, 'Max', max_L);
+set(handles.text11, 'String', max_L);
 set(handles.slider3, 'Value', round(fin));
 set(handles.text7, 'String', round(fin));
 set(handles.slider3, 'SliderStep', [1/(max_L-min_L), 0.1])
@@ -144,6 +150,8 @@ x = [ones(length(Rr), 1) Rr]; % adds a column of ones to Rr
 b = x \ Nr; % b(1) is the y-intercept and b(2) is the slope of the line 
 y = x * b; % linear regression
 corr = 1 - sum((Nr - y).^2) / sum((Nr - mean(Nr)).^2); % correlation
+
+set(handles.text12, 'String', sprintf('Linear regression correlation = %f', corr));
  
 % plots the regression line and the fractal dimension results
 plot(Rr, y, 'r', 'LineWidth', 3);
@@ -237,6 +245,8 @@ x = [ones(length(Rr), 1) Rr]; % adds a column of ones to Rr
 b = x \ Nr; % b(1) is the y-intercept and b(2) is the slope of the line 
 y = x * b; % linear regression
 corr = 1 - sum((Nr - y).^2) / sum((Nr - mean(Nr)).^2); % correlation
+
+set(handles.text12, 'String', sprintf('Linear regression correlation = %f', corr));
  
 % plots the regression line and the fractal dimension results
 plot(Rr, y, 'r', 'LineWidth', 3);
