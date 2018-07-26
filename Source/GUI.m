@@ -208,16 +208,35 @@ else
     max_L_regression_Local = str2double(fgetl(fid));
     min_L_regression_Global = str2double(fgetl(fid));
     max_L_regression_Global = str2double(fgetl(fid));
+    rwrite = 0;
     if (min_L_regression_Local < min)
         min_L_regression_Local = min;
+        rwrite = 1;
     end
     if (max_L_regression_Local > max)
         max_L_regression_Local = max;
+        rwrite = 1;
     end
     if (min_L_regression_Global < min)
         min_L_regression_Global = min;
+        rwrite = 1;
     end
     if (max_L_regression_Global > max)
+        max_L_regression_Global = max;
+        rwrite = 1;
+    end
+    if ( rwrite == 1 )
+        fclose(fid);
+        fid = fopen('../Config/config.txt', 'w');
+        fprintf(fid, '%d \n', sigma);
+        fprintf(fid, '%d \n', numiter);
+        fprintf(fid, '%d \n', min);
+        fprintf(fid, '%d \n', max);
+        fprintf(fid, '%d \n', min);
+        fprintf(fid, '%d \n', max);
+        min_L_regression_Local = min;
+        max_L_regression_Local = max;
+        min_L_regression_Global = min;
         max_L_regression_Global = max;
     end
 end
@@ -233,7 +252,9 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
     
     
     % convert to m file
-    generate_m(fpath);
+    if (~exist(strcat(filepath,'\',name,'_temp','\',name,'.m')) > 0)
+        generate_m(fpath);
+    end
     
     % m file to Combine and Resize
     BATCH_MLCombineAndResize(strcat(filepath,'\',name,'_temp','\',name,'.m'), 0, 0, 0);
