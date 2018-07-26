@@ -61,6 +61,7 @@ guidata(hObject, handles);
 % UIWAIT makes FractalDimensionLocal wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 axes(handles.axes1);
+cla(handles.axes1);
 fid = fopen('../Config/config.txt');
 
 sigma = fgetl(fid);
@@ -250,6 +251,25 @@ set(handles.text12, 'String', sprintf('Linear regression correlation = %f', corr
  
 % plots the regression line and the fractal dimension results
 plot(Rr, y, 'r', 'LineWidth', 3);
+
+% saving new regression values
+fid = fopen('../Config/config.txt');
+old_sigma = fgetl(fid);
+old_niter = fgetl(fid);
+for i=1:3
+    old_minGlob = fgetl(fid);
+end
+old_maxGlob = fgetl(fid);
+
+fclose(fid);
+fsave = fopen('../Config/config.txt', 'w');
+fprintf(fsave, '%s \n', old_sigma);
+fprintf(fsave, '%s \n', old_niter);
+fprintf(fsave, '%d \n', get(handles.slider2, 'Value'));
+fprintf(fsave, '%d \n', get(handles.slider3, 'Value'));
+fprintf(fsave, '%s \n', old_minGlob);
+fprintf(fsave, '%s \n', old_maxGlob);
+
 end
 
 % --------------------------------------------------------------------
@@ -269,6 +289,7 @@ function slider2_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 set(handles.text6, 'String', round(get(handles.slider2, 'Value')));
+set(handles.slider2, 'Value', round(get(handles.slider2, 'Value')));
 
 
 % --- Executes during object creation, after setting all properties.
@@ -292,6 +313,7 @@ function slider3_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 set(handles.text7, 'String', round(get(handles.slider3, 'Value')));
+set(handles.slider3, 'Value', round(get(handles.slider3, 'Value')));
 
 
 % --- Executes during object creation, after setting all properties.

@@ -98,6 +98,15 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
                disp(['User selected ', fullfile(path,file)]);
             end
             if (isequal(ext, '.obj'))
+                
+                set(handles.GlobalSHFD, 'Visible', 'off');
+                set(handles.Correlation, 'Visible', 'off');
+                set(handles.text6, 'Visible', 'off');
+                set(handles.text7, 'Visible', 'off');
+                set(handles.vrbutton, 'Visible', 'off');
+                set(handles.pushbutton5, 'Visible', 'off');
+                set(handles.pushbutton4, 'Visible', 'off');
+                
                 obj = readObj(fullfile(path,file));
                 set(handles.uipushtool2,'enable','on');
                 set(handles.uitoggletool1,'enable','on');
@@ -180,7 +189,7 @@ sigma = str2double(fgetl(fid));
 global numiter;
 numiter = str2double(fgetl(fid));
 
-tline = str2double(fgetl(fid));
+tline = fgetl(fid);
 if (~ischar(tline))
     fclose(fid);
     fid = fopen('../Config/config.txt', 'w');
@@ -195,10 +204,22 @@ if (~ischar(tline))
     min_L_regression_Global = min;
     max_L_regression_Global = max;
 else
-    min_L_regression_Local = tline;
+    min_L_regression_Local = str2double(tline);
     max_L_regression_Local = str2double(fgetl(fid));
     min_L_regression_Global = str2double(fgetl(fid));
     max_L_regression_Global = str2double(fgetl(fid));
+    if (min_L_regression_Local < min)
+        min_L_regression_Local = min;
+    end
+    if (max_L_regression_Local > max)
+        max_L_regression_Local = max;
+    end
+    if (min_L_regression_Global < min)
+        min_L_regression_Global = min;
+    end
+    if (max_L_regression_Global > max)
+        max_L_regression_Global = max;
+    end
 end
 
 fclose(fid);
@@ -363,32 +384,45 @@ function screenbutton_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to screenbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+phase = 0;
+disp(get(handles.vrbutton, 'Visible'));
+if (strcmp(get(handles.vrbutton, 'Visible'),'on'))
+    phase = 1;
+end
+
 set(handles.GlobalSHFD, 'Visible', 'off');
 set(handles.Correlation, 'Visible', 'off');
 set(handles.text6, 'Visible', 'off');
 set(handles.text7, 'Visible', 'off');
-set(handles.vrbutton, 'Visible', 'off');
 set(handles.MFileButton,'visible','off');
 set(handles.minL,'visible','off');
 set(handles.maxL,'visible','off');
 set(handles.maxText,'visible','off');
 set(handles.minText,'visible','off');
 set(handles.screenbutton,'enable','off');
+set(handles.pushbutton5, 'Visible', 'off');
+set(handles.pushbutton4, 'Visible', 'off');
+set(handles.vrbutton, 'Visible', 'off');
     
 [file,path] = uiputfile('*.png');
 print(strcat(path,file), '-dpng');
 
-set(handles.GlobalSHFD, 'Visible', 'on');
-set(handles.Correlation, 'Visible', 'on');
-set(handles.text6, 'Visible', 'on');
-set(handles.text7, 'Visible', 'on');
-set(handles.vrbutton, 'Visible', 'on');
 set(handles.MFileButton,'visible','on');
 set(handles.minL,'visible','on');
 set(handles.maxL,'visible','on');
 set(handles.maxText,'visible','on');
 set(handles.minText,'visible','on');
 set(handles.screenbutton,'enable','on');
+
+if (phase == 1)
+    set(handles.vrbutton, 'Visible', 'on');
+    set(handles.pushbutton5, 'Visible', 'on');
+    set(handles.pushbutton4, 'Visible', 'on');
+    set(handles.text6, 'Visible', 'on');
+    set(handles.text7, 'Visible', 'on');
+    set(handles.GlobalSHFD, 'Visible', 'on');
+	set(handles.Correlation, 'Visible', 'on');
+end
 
 
 % --- Executes on button press in vrbutton.
