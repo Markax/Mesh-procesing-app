@@ -181,8 +181,16 @@ function MFileButton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-min = str2double(get(handles.minL, 'String'));
-max = str2double(get(handles.maxL, 'String'));
+global min;
+global max;
+
+changes = false;
+if (isempty(min) || isempty(max) || min ~= str2double(get(handles.minL, 'String')) || max ~= str2double(get(handles.maxL, 'String')))
+    min = str2double(get(handles.minL, 'String'));
+    max = str2double(get(handles.maxL, 'String'));
+    changes = true;
+end
+
 fid = fopen('../Config/config.txt');
 global sigma;
 sigma = str2double(fgetl(fid));
@@ -190,7 +198,7 @@ global numiter;
 numiter = str2double(fgetl(fid));
 
 tline = fgetl(fid);
-if (~ischar(tline))
+if (~ischar(tline) || changes == true)
     fclose(fid);
     fid = fopen('../Config/config.txt', 'w');
     fprintf(fid, '%d \n', sigma);
