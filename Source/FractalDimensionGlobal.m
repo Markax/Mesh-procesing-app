@@ -22,7 +22,7 @@ function varargout = FractalDimensionGlobal(varargin)
 
 % Edit the above text to modify the response to help FractalDimensionGlobal
 
-% Last Modified by GUIDE v2.5 26-Jul-2018 22:32:50
+% Last Modified by GUIDE v2.5 27-Jul-2018 13:35:08
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -102,6 +102,7 @@ set(handles.slider3, 'Value', round(fin));
 set(handles.text10, 'String', round(fin));
 set(handles.slider3, 'SliderStep', [1/(max_L-min_L), 0.1])
 
+global r;
 r = zeros(1, rec);
 for i=min_L:max_L
     r(1,i) = i;
@@ -120,6 +121,7 @@ while ischar(A)
     end
 end
 
+global n;
 n = VAreas(1:rec+1);
 n = n';
 % NORMALIZANDO 
@@ -164,8 +166,40 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+% saving new regression values
+fid = fopen('../Config/config.txt');
+old_sigma = fgetl(fid);
+old_niter = fgetl(fid);
+old_minLoc = fgetl(fid);
+old_maxLoc = fgetl(fid);
+
+fclose(fid);
+fsave = fopen('../Config/config.txt', 'w');
+fprintf(fsave, '%s \n', old_sigma);
+fprintf(fsave, '%s \n', old_niter);
+fprintf(fsave, '%s \n', old_minLoc);
+fprintf(fsave, '%s \n', old_maxLoc);
+fprintf(fsave, '%d \n', get(handles.slider2, 'Value'));
+fprintf(fsave, '%d \n', get(handles.slider3, 'Value'));
+fclose(fsave);
+
+close
+
+% --- Executes on slider movement.
+function slider2_Callback(hObject, eventdata, handles)
+% hObject    handle to slider2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+set(handles.text4, 'String', round(get(handles.slider2, 'Value')));
+set(handles.slider2, 'Value', round(get(handles.slider2, 'Value')));
+
 if ( get(handles.slider3, 'Value') <= get(handles.slider2, 'Value') )
     errordlg('Max L value must be greater than Min L value');
+        set(handles.text4, 'String', round(get(handles.slider2, 'Value'))-1);
+    set(handles.slider2, 'Value', round(get(handles.slider2, 'Value'))-1);
 else
     
 global rec;
@@ -175,22 +209,11 @@ global ini;
 ini = get(handles.slider2, 'Value');
 global fin;
 fin = get(handles.slider3, 'Value');
-global VAreas;    
-
-    r = zeros(1, rec);
-for i=min_L:max_L
-    r(1,i) = i;
-end
-
-n = zeros(1, rec);
-
-n = VAreas(1:rec+1);
-n = n';
+global VAreas;
+global r;
+global n;
 
 cla(handles.axes1);
-
-% NORMALIZANDO 
-n = n / n(max(r)); % normaliza en base al área de la reconstrucción con l máxima
 
 N = log(n)';
 R = log(r)';
@@ -214,17 +237,6 @@ ylabel('log(normalized area)');
 
 set(handles.text6, 'String', sprintf('Linear regression correlation = %f', corr));
 end
-
-% --- Executes on slider movement.
-function slider2_Callback(hObject, eventdata, handles)
-% hObject    handle to slider2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'Value') returns position of slider
-%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
-set(handles.text4, 'String', round(get(handles.slider2, 'Value')));
-set(handles.slider2, 'Value', round(get(handles.slider2, 'Value')));
 
 
 % --- Executes during object creation, after setting all properties.
@@ -250,6 +262,48 @@ function slider3_Callback(hObject, eventdata, handles)
 set(handles.text10, 'String', round(get(handles.slider3, 'Value')));
 set(handles.slider3, 'Value', round(get(handles.slider3, 'Value')));
 
+if ( get(handles.slider3, 'Value') <= get(handles.slider2, 'Value') )
+    errordlg('Max L value must be greater than Min L value');
+    set(handles.text10, 'String', round(get(handles.slider3, 'Value'))+1);
+    set(handles.slider3, 'Value', round(get(handles.slider3, 'Value'))+1);
+else
+    
+global rec;
+global min_L;
+global max_L;
+global ini;
+ini = get(handles.slider2, 'Value');
+global fin;
+fin = get(handles.slider3, 'Value');
+global VAreas;
+global r;
+global n;
+
+cla(handles.axes1);
+
+N = log(n)';
+R = log(r)';
+
+scatter(R, N);
+hold on;
+ 
+% linear regression computation
+Rr = R(ini : fin); % R limited to the selected range of boxes
+Nr = N(ini : fin); % N limited to the selected range of boxes
+ 
+x = [ones(length(Rr), 1) Rr]; % adds a column of ones to Rr
+b = x \ Nr; % b(1) is the y-intercept and b(2) is the slope of the line 
+y = x * b; % linear regression
+corr = 1 - sum((Nr - y).^2) / sum((Nr - mean(Nr)).^2); % correlation
+ 
+% plots the regression line and the fractal dimension results
+plot(Rr, y, 'r', 'LineWidth', 3);
+xlabel('log(l)');
+ylabel('log(normalized area)');
+
+set(handles.text6, 'String', sprintf('Linear regression correlation = %f', corr));
+end
+
 % --- Executes during object creation, after setting all properties.
 function slider3_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to slider3 (see GCBO)
@@ -264,6 +318,14 @@ end
 % --------------------------------------------------------------------
 function uipushtool1_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to uipushtool1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+close
+
+
+% --- Executes on button press in pushbutton2.
+function pushbutton2_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 close
