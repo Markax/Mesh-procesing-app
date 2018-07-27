@@ -257,10 +257,14 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
     end
     
     % m file to Combine and Resize
-    BATCH_MLCombineAndResize(strcat(filepath,'\',name,'_temp','\',name,'.m'), 0, 0, 0);
+    if (~exist(strcat(filepath,'\',name,'_temp','\',name,'_OL_2O.mat')) > 0)
+        BATCH_MLCombineAndResize(strcat(filepath,'\',name,'_temp','\',name,'.m'), 0, 0, 0);
+    end
     
     % OL2_O2 file to MakeTemplate
-    BATCH_MLMakeTemplate(strcat(filepath,'\',name,'_temp','\',name,'_OL_2O.mat'), 1, 1)
+    if (~exist(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_smo.mat')) > 0)
+        BATCH_MLMakeTemplate(strcat(filepath,'\',name,'_temp','\',name,'_OL_2O.mat'), 1, 1)
+    end
     
     % Rebuilding
     BATCH_genera_reconstrucciones(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_smo.mat'), min, max);
