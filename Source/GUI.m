@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 24-Jul-2018 18:32:00
+% Last Modified by GUIDE v2.5 31-Jul-2018 20:12:25
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -57,6 +57,12 @@ handles.output = hObject;
 % Update handles structure
 guidata(hObject, handles);
 
+axes(handles.axes2);
+axis square; 
+axis off;
+axis equal;
+axis tight; 
+
 addpath(genpath('../Config'));
 %file reset
 fvis = fopen('../Config/actualview.txt', 'w');
@@ -78,85 +84,7 @@ function varargout = GUI_OutputFcn(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Get default command line output from handles structure
-varargout{1} = handles.output;
-
-
-
-% --------------------------------------------------------------------
-function uipushtool1_ClickedCallback(hObject, eventdata, handles)
-% hObject    handle to uipushtool1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-[file,path] = uigetfile('../Models/*.*');
-[filepath,name,ext] = fileparts(file);
-            if isequal(file,0)
-               disp('User selected Cancel');
-            else
-               global fpath;
-               fpath = fullfile(path,file);
-               disp(['User selected ', fullfile(path,file)]);
-            end
-            if (isequal(ext, '.obj'))
-                
-                set(handles.GlobalSHFD, 'Visible', 'off');
-                set(handles.Correlation, 'Visible', 'off');
-                set(handles.text6, 'Visible', 'off');
-                set(handles.text7, 'Visible', 'off');
-                set(handles.vrbutton, 'Visible', 'off');
-                set(handles.pushbutton5, 'Visible', 'off');
-                set(handles.pushbutton4, 'Visible', 'off');
-                
-                obj = readObj(fullfile(path,file));
-                set(handles.uipushtool2,'enable','on');
-                set(handles.uitoggletool1,'enable','on');
-                set(handles.uitoggletool3,'enable','on');
-                set(handles.uitoggletool4,'enable','on');
-                set(handles.MFileButton,'visible','on');
-                set(handles.minL,'visible','on');
-                set(handles.maxL,'visible','on');
-                set(handles.maxText,'visible','on');
-                set(handles.minText,'visible','on');
-                set(handles.screenbutton,'enable','on');
-                trisurf(obj.f , obj.v(:,1), obj.v(:,2), obj.v(:,3),'FaceColor',[0.26,0.33,1.0 ]);
-                shading interp
-                colormap gray(256);
-                lighting phong;
-                camproj('perspective');
-                axis square; 
-                axis off;
-                axis equal;
-                axis tight;  
-                camlight('headlight')
-                cameratoolbar;
-                rotate3d on;
-            else
-                [vertex_coords, faces] = read_freesurfer_surf(fullfile(path,file));
-                set(handles.uipushtool2,'enable','on');
-                set(handles.uitoggletool1,'enable','on');
-                set(handles.uitoggletool3,'enable','on');
-                set(handles.uitoggletool4,'enable','on');
-                set(handles.MFileButton,'visible','on');
-                set(handles.minL,'visible','on');
-                set(handles.maxL,'visible','on');
-                set(handles.maxText,'visible','on');
-                set(handles.minText,'visible','on');
-                set(handles.screenbutton,'enable','on');
-                trisurf(faces, vertex_coords(:,1), vertex_coords(:,2), vertex_coords(:,3),'FaceColor',[0.26,0.33,1.0 ]);
-                shading interp
-                colormap gray(256);
-                lighting phong;
-                camproj('perspective');
-                axis square; 
-                axis off;
-                axis equal;
-                axis tight;
-                camlight('headlight');
-                cameratoolbar;
-                rotate3d on;
-            end
-           
-
+varargout{1} = handles.output;           
 
 % --------------------------------------------------------------------
 function uitoggletool4_ClickedCallback(hObject, eventdata, handles)
@@ -311,13 +239,13 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
     
     set(handles.GlobalSHFD, 'String', globalshfd);
     set(handles.Correlation, 'String', correlation);
-    set(handles.GlobalSHFD, 'Visible', 'on');
-    set(handles.Correlation, 'Visible', 'on');
-    set(handles.text6, 'Visible', 'on');
-    set(handles.text7, 'Visible', 'on');
-    set(handles.vrbutton, 'Visible', 'on');
-    set(handles.pushbutton4,'visible','on');
-    set(handles.pushbutton5,'visible','on');
+    set(handles.GlobalSHFD, 'Enable', 'on');
+    set(handles.Correlation, 'Enable', 'on');
+    set(handles.text6, 'Enable', 'on');
+    set(handles.text7, 'Enable', 'on');
+    set(handles.vrbutton, 'Enable', 'on');
+    set(handles.pushbutton4,'Enable','on');
+    set(handles.pushbutton5,'Enable','on');
     
     fvis = fopen('../Config/actualview.txt', 'w');
     fprintf(fvis, '%s \n', fpath);
@@ -417,44 +345,12 @@ function screenbutton_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to screenbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-phase = 0;
-disp(get(handles.vrbutton, 'Visible'));
-if (strcmp(get(handles.vrbutton, 'Visible'),'on'))
-    phase = 1;
-end
 
-set(handles.GlobalSHFD, 'Visible', 'off');
-set(handles.Correlation, 'Visible', 'off');
-set(handles.text6, 'Visible', 'off');
-set(handles.text7, 'Visible', 'off');
-set(handles.MFileButton,'visible','off');
-set(handles.minL,'visible','off');
-set(handles.maxL,'visible','off');
-set(handles.maxText,'visible','off');
-set(handles.minText,'visible','off');
-set(handles.screenbutton,'enable','off');
-set(handles.pushbutton5, 'Visible', 'off');
-set(handles.pushbutton4, 'Visible', 'off');
-set(handles.vrbutton, 'Visible', 'off');
-    
+fig = isolate_axes(handles.axes2);
 [file,path] = uiputfile('*.png');
-print(strcat(path,file), '-dpng');
+export_fig(strcat(path,file), fig, '-dpng');
+close(fig);
 
-set(handles.MFileButton,'visible','on');
-set(handles.minL,'visible','on');
-set(handles.maxL,'visible','on');
-set(handles.maxText,'visible','on');
-set(handles.minText,'visible','on');
-set(handles.screenbutton,'enable','on');
-
-if (phase == 1)
-    set(handles.vrbutton, 'Visible', 'on');
-    set(handles.pushbutton5, 'Visible', 'on');
-    set(handles.pushbutton4, 'Visible', 'on');
-    set(handles.text6, 'Visible', 'on');
-    set(handles.text7, 'Visible', 'on');
-    set(handles.GlobalSHFD, 'Visible', 'on');
-	set(handles.Correlation, 'Visible', 'on');
 end
 
 
@@ -504,18 +400,25 @@ function selectmeshb_Callback(hObject, eventdata, handles)
                disp(['User selected ', fullfile(path,file)]);
             end
             if (isequal(ext, '.obj'))
+                set(handles.GlobalSHFD, 'Enable', 'off');
+                set(handles.Correlation, 'Enable', 'off');
+                set(handles.text6, 'Enable', 'off');
+                set(handles.text7, 'Enable', 'off');
+                set(handles.vrbutton, 'Enable', 'off');
+                set(handles.pushbutton5, 'Enable', 'off');
+                set(handles.pushbutton4, 'Enable', 'off');
+                
                 obj = readObj(fullfile(path,file));
                 set(handles.uipushtool2,'enable','on');
                 set(handles.uitoggletool1,'enable','on');
                 set(handles.uitoggletool3,'enable','on');
                 set(handles.uitoggletool4,'enable','on');
-                set(handles.MFileButton,'visible','on');
-                set(handles.minL,'visible','on');
-                set(handles.maxL,'visible','on');
-                set(handles.maxText,'visible','on');
-                set(handles.minText,'visible','on');
+                set(handles.MFileButton,'Enable','on');
+                set(handles.minL,'Enable','on');
+                set(handles.maxL,'Enable','on');
+                set(handles.maxText,'Enable','on');
+                set(handles.minText,'Enable','on');
                 set(handles.screenbutton,'enable','on');
-                set(handles.selectmeshb,'visible','off');
                 trisurf(obj.f , obj.v(:,1), obj.v(:,2), obj.v(:,3),'FaceColor',[0.26,0.33,1.0 ]);
                 shading interp
                 colormap gray(256);
@@ -529,18 +432,25 @@ function selectmeshb_Callback(hObject, eventdata, handles)
                 cameratoolbar;
                 rotate3d on;
             else
+                set(handles.GlobalSHFD, 'Enable', 'off');
+                set(handles.Correlation, 'Enable', 'off');
+                set(handles.text6, 'Enable', 'off');
+                set(handles.text7, 'Enable', 'off');
+                set(handles.vrbutton, 'Enable', 'off');
+                set(handles.pushbutton5, 'Enable', 'off');
+                set(handles.pushbutton4, 'Enable', 'off');
+                
                 [vertex_coords, faces] = read_freesurfer_surf(fullfile(path,file));
                 set(handles.uipushtool2,'enable','on');
                 set(handles.uitoggletool1,'enable','on');
                 set(handles.uitoggletool3,'enable','on');
                 set(handles.uitoggletool4,'enable','on');
-                set(handles.MFileButton,'visible','on');
-                set(handles.minL,'visible','on');
-                set(handles.maxL,'visible','on');
-                set(handles.maxText,'visible','on');
-                set(handles.minText,'visible','on');
+                set(handles.MFileButton,'Enable','on');
+                set(handles.minL,'Enable','on');
+                set(handles.maxL,'Enable','on');
+                set(handles.maxText,'Enable','on');
+                set(handles.minText,'Enable','on');
                 set(handles.screenbutton,'enable','on');
-                set(handles.selectmeshb,'visible','off');
                 trisurf(faces, vertex_coords(:,1), vertex_coords(:,2), vertex_coords(:,3),'FaceColor',[0.26,0.33,1.0 ]);
                 shading interp
                 colormap gray(256);
