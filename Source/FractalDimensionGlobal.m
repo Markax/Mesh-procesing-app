@@ -183,6 +183,42 @@ fprintf(fsave, '%d \n', get(handles.slider2, 'Value'));
 fprintf(fsave, '%d \n', get(handles.slider3, 'Value'));
 fclose(fsave);
 
+fview = fopen('../Config/actualview.txt');
+
+global fpath;
+fpath = fgetl(fview);
+fclose(fview);
+
+[filepath,name] = fileparts(fpath);
+
+h = findobj('Tag', 'MainGUI');
+if ~isempty(h)
+    g1data = guidata(h);
+    axes(g1data.axes2);
+    compute_global_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf'),int32(get(handles.slider2, 'Value')), int32(get(handles.slider3, 'Value')));
+    
+    fset = fopen(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_GLOBAL_SHFD_',int2str(get(handles.slider2, 'Value')),'_',int2str(get(handles.slider3, 'Value')),'.txt'));
+    disp(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_GLOBAL_SHFD_',int2str(get(handles.slider2, 'Value')),'_',int2str(get(handles.slider3, 'Value')),'.txt'));
+    A = fgetl(fset);
+    
+    for i=1:3
+        A = fgets(fset);
+        if (A~=-1)
+            B = fscanf(fset, '%f');
+        end
+    end
+    globalshfd = B(1:1);
+    correlation = B(end:end);
+
+    fclose(fset);
+    
+    set(g1data.GlobalSHFD, 'String', globalshfd);
+    set(g1data.Correlation, 'String', correlation);
+    
+end
+    
+axes(handles.axes1);
+
 close
 
 % --- Executes on slider movement.

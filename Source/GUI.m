@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 31-Jul-2018 20:12:25
+% Last Modified by GUIDE v2.5 31-Jul-2018 21:52:49
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -73,7 +73,7 @@ fprintf(fset, '900 \n');
 
 
 % UIWAIT makes GUI wait for user response (see UIRESUME)
-% uiwait(handles.figure1);
+% uiwait(handles.MainGUI);
 
 
 % --- Outputs from this function are returned to the command line.
@@ -237,12 +237,12 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
 
     fclose(fset);
     
-    set(handles.GlobalSHFD, 'String', globalshfd);
-    set(handles.Correlation, 'String', correlation);
-    set(handles.GlobalSHFD, 'Enable', 'on');
-    set(handles.Correlation, 'Enable', 'on');
     set(handles.text6, 'Enable', 'on');
     set(handles.text7, 'Enable', 'on');
+    set(handles.GlobalSHFD, 'Enable', 'on');
+    set(handles.Correlation, 'Enable', 'on');
+    set(handles.GlobalSHFD, 'String', globalshfd);
+    set(handles.Correlation, 'String', correlation);
     set(handles.vrbutton, 'Enable', 'on');
     set(handles.pushbutton4,'Enable','on');
     set(handles.pushbutton5,'Enable','on');
@@ -351,8 +351,6 @@ fig = isolate_axes(handles.axes2);
 export_fig(strcat(path,file), fig, '-dpng');
 close(fig);
 
-end
-
 
 % --- Executes on button press in vrbutton.
 function vrbutton_Callback(hObject, eventdata, handles)
@@ -378,12 +376,21 @@ function pushbutton5_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 FractalDimensionLocal;
 
-hold on;
-
-visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\',name,'.m'), strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_',int2str(sigma),'_',int2str(numiter),'.local_shfd_',int2str(min_L_regression_Local),'_',int2str(max_L_regression_Local),'.txt'));
-
-
-
+function refreshValues
+    axes(handles.axes2);
+    
+    global fpath;
+    [filepath,name] = fileparts(fpath);
+    
+    %Compute local SHFD
+    compute_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', int2str(sigma),'_', int2str(numiter),'.txt'), int32(min_L_regression_Local), int32(max_L_regression_Local));
+    %Compute global SHFD
+    compute_global_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf'), int32(min_L_regression_Global), int32(max_L_regression_Global));
+    waitbar(1, wb, 'Computing SHFD values...  (6/6)');
+    %Visualice local map SHFD
+    visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\',name,'.m'), strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_',int2str(sigma),'_',int2str(numiter),'.local_shfd_',int2str(min_L_regression_Local),'_',int2str(max_L_regression_Local),'.txt'));
+    
+    
 
 % --- Executes on button press in selectmeshb.
 function selectmeshb_Callback(hObject, eventdata, handles)

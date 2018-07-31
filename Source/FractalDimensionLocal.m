@@ -22,7 +22,7 @@ function varargout = FractalDimensionLocal(varargin)
 
 % Edit the above text to modify the response to help FractalDimensionLocal
 
-% Last Modified by GUIDE v2.5 27-Jul-2018 12:54:22
+% Last Modified by GUIDE v2.5 31-Jul-2018 21:43:15
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -59,7 +59,7 @@ handles.output = hObject;
 guidata(hObject, handles);
 
 % UIWAIT makes FractalDimensionLocal wait for user response (see UIRESUME)
-% uiwait(handles.figure1);
+% uiwait(handles.LocalGUI);
 axes(handles.axes1);
 cla(handles.axes1);
 fid = fopen('../Config/config.txt');
@@ -253,6 +253,26 @@ fprintf(fsave, '%d \n', get(handles.slider3, 'Value'));
 fprintf(fsave, '%s \n', old_minGlob);
 fprintf(fsave, '%s \n', old_maxGlob);
 fclose(fsave);
+
+
+
+fview = fopen('../Config/actualview.txt');
+
+global fpath;
+fpath = fgetl(fview);
+fclose(fview);
+
+[filepath,name] = fileparts(fpath);
+
+h = findobj('Tag', 'MainGUI');
+if ~isempty(h)
+    g1data = guidata(h);
+    axes(g1data.axes2);
+    compute_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', old_sigma,'_', old_niter,'.txt'), int32(get(handles.slider2, 'Value')), int32(get(handles.slider3, 'Value')));
+    visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\',name,'.m'), strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_',old_sigma,'_',old_niter,'.local_shfd_',int2str(get(handles.slider2, 'Value')),'_',int2str(get(handles.slider3, 'Value')),'.txt'));
+end
+    
+axes(handles.axes1);
 
 close
 
