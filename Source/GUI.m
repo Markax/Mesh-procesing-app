@@ -345,6 +345,7 @@ function screenbutton_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to screenbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+addpath(genpath('export_fig'));
 
 fig = isolate_axes(handles.axes2);
 [file,path] = uiputfile('*.png');

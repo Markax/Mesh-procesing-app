@@ -108,7 +108,6 @@ for i=min_L:max_L
     r(1,i) = i;
 end
 
-n = zeros(1, rec);
 
 f_area = fopen(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_GLOBAL_SHFD_',int2str(ini),'_',int2str(fin),'.txt'));
 
