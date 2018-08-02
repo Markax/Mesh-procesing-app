@@ -212,7 +212,6 @@ if ~isempty(h)
     fclose(fset);
     
     set(g1data.GlobalSHFD, 'String', globalshfd);
-    set(g1data.Correlation, 'String', correlation);
     
 end
     

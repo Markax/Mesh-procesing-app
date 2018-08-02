@@ -87,14 +87,6 @@ function varargout = GUI_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;           
 
 % --------------------------------------------------------------------
-function uitoggletool4_ClickedCallback(hObject, eventdata, handles)
-% hObject    handle to uitoggletool4 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-rotate3d on;
-
-
-% --------------------------------------------------------------------
 function uipushtool2_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to uipushtool2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -237,12 +229,9 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
 
     fclose(fset);
     
-    set(handles.text6, 'Enable', 'on');
     set(handles.text7, 'Enable', 'on');
     set(handles.GlobalSHFD, 'Enable', 'on');
-    set(handles.Correlation, 'Enable', 'on');
     set(handles.GlobalSHFD, 'String', globalshfd);
-    set(handles.Correlation, 'String', correlation);
     set(handles.vrbutton, 'Enable', 'on');
     set(handles.pushbutton4,'Enable','on');
     set(handles.pushbutton5,'Enable','on');
@@ -409,8 +398,6 @@ function selectmeshb_Callback(hObject, eventdata, handles)
             end
             if (isequal(ext, '.obj'))
                 set(handles.GlobalSHFD, 'Enable', 'off');
-                set(handles.Correlation, 'Enable', 'off');
-                set(handles.text6, 'Enable', 'off');
                 set(handles.text7, 'Enable', 'off');
                 set(handles.vrbutton, 'Enable', 'off');
                 set(handles.pushbutton5, 'Enable', 'off');
@@ -418,9 +405,6 @@ function selectmeshb_Callback(hObject, eventdata, handles)
                 
                 obj = readObj(fullfile(path,file));
                 set(handles.uipushtool2,'enable','on');
-                set(handles.uitoggletool1,'enable','on');
-                set(handles.uitoggletool3,'enable','on');
-                set(handles.uitoggletool4,'enable','on');
                 set(handles.MFileButton,'Enable','on');
                 set(handles.minL,'Enable','on');
                 set(handles.maxL,'Enable','on');
@@ -441,8 +425,6 @@ function selectmeshb_Callback(hObject, eventdata, handles)
                 rotate3d on;
             else
                 set(handles.GlobalSHFD, 'Enable', 'off');
-                set(handles.Correlation, 'Enable', 'off');
-                set(handles.text6, 'Enable', 'off');
                 set(handles.text7, 'Enable', 'off');
                 set(handles.vrbutton, 'Enable', 'off');
                 set(handles.pushbutton5, 'Enable', 'off');
@@ -450,9 +432,6 @@ function selectmeshb_Callback(hObject, eventdata, handles)
                 
                 [vertex_coords, faces] = read_freesurfer_surf(fullfile(path,file));
                 set(handles.uipushtool2,'enable','on');
-                set(handles.uitoggletool1,'enable','on');
-                set(handles.uitoggletool3,'enable','on');
-                set(handles.uitoggletool4,'enable','on');
                 set(handles.MFileButton,'Enable','on');
                 set(handles.minL,'Enable','on');
                 set(handles.maxL,'Enable','on');
