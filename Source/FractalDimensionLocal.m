@@ -62,6 +62,7 @@ guidata(hObject, handles);
 % uiwait(handles.LocalGUI);
 axes(handles.axes1);
 cla(handles.axes1);
+
 fid = fopen('../Config/config.txt');
 
 sigma = fgetl(fid);
@@ -70,6 +71,7 @@ global ini;
 ini = str2double(fgetl(fid)); 
 global fin;
 fin = str2double(fgetl(fid));
+fclose(fid);
 
 fid2 = fopen('../Config/actualview.txt');
 
@@ -79,6 +81,7 @@ global min_L;
 min_L = str2double(fgetl(fid2));
 global max_L;
 max_L = str2double(fgetl(fid2));
+fclose(fid2);
 
 fvert = fopen(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', sigma,'_', numiter,'.txt'));
 global rec 
@@ -112,6 +115,7 @@ set(handles.slider3, 'SliderStep', [1/(max_L-min_L), 0.1])
 
 global VValues;
 VValues = fscanf(fvert, '%f');
+fclose(fvert);
 
 n = zeros(1, rec);
 for i=1:rec

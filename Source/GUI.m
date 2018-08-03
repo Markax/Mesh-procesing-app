@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 31-Jul-2018 21:52:49
+% Last Modified by GUIDE v2.5 03-Aug-2018 20:25:28
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -225,7 +225,6 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
         end
     end
     globalshfd = B(1:1);
-    correlation = B(end:end);
 
     fclose(fset);
     
@@ -366,22 +365,6 @@ function pushbutton5_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 FractalDimensionLocal;
 
-function refreshValues
-    axes(handles.axes2);
-    
-    global fpath;
-    [filepath,name] = fileparts(fpath);
-    
-    %Compute local SHFD
-    compute_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', int2str(sigma),'_', int2str(numiter),'.txt'), int32(min_L_regression_Local), int32(max_L_regression_Local));
-    %Compute global SHFD
-    compute_global_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf'), int32(min_L_regression_Global), int32(max_L_regression_Global));
-    waitbar(1, wb, 'Computing SHFD values...  (6/6)');
-    %Visualice local map SHFD
-    visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\',name,'.m'), strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_',int2str(sigma),'_',int2str(numiter),'.local_shfd_',int2str(min_L_regression_Local),'_',int2str(max_L_regression_Local),'.txt'));
-    
-    
-
 % --- Executes on button press in selectmeshb.
 function selectmeshb_Callback(hObject, eventdata, handles)
 % hObject    handle to selectmeshb (see GCBO)
@@ -411,6 +394,10 @@ function selectmeshb_Callback(hObject, eventdata, handles)
                 set(handles.maxText,'Enable','on');
                 set(handles.minText,'Enable','on');
                 set(handles.screenbutton,'enable','on');
+                set(handles.uipushtool10,'Enable','on');
+                set(handles.uipushtool11,'Enable','on');
+                set(handles.uipushtool12,'Enable','on');
+                set(handles.uipushtool13,'Enable','on');
                 trisurf(obj.f , obj.v(:,1), obj.v(:,2), obj.v(:,3),'FaceColor',[0.26,0.33,1.0 ]);
                 shading interp
                 colormap gray(256);
@@ -438,6 +425,10 @@ function selectmeshb_Callback(hObject, eventdata, handles)
                 set(handles.maxText,'Enable','on');
                 set(handles.minText,'Enable','on');
                 set(handles.screenbutton,'enable','on');
+                set(handles.uipushtool10,'Enable','on');
+                set(handles.uipushtool11,'Enable','on');
+                set(handles.uipushtool12,'Enable','on');
+                set(handles.uipushtool13,'Enable','on');
                 trisurf(faces, vertex_coords(:,1), vertex_coords(:,2), vertex_coords(:,3),'FaceColor',[0.26,0.33,1.0 ]);
                 shading interp
                 colormap gray(256);
@@ -451,3 +442,32 @@ function selectmeshb_Callback(hObject, eventdata, handles)
                 cameratoolbar;
                 rotate3d on;
             end
+
+
+% --------------------------------------------------------------------
+function uipushtool10_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to uipushtool10 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+camorbit(-90,0,'camera');
+
+% --------------------------------------------------------------------
+function uipushtool11_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to uipushtool11 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+camorbit(90,0,'camera');
+
+% --------------------------------------------------------------------
+function uipushtool12_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to uipushtool12 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+camorbit(0, 90,'camera');
+
+% --------------------------------------------------------------------
+function uipushtool13_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to uipushtool13 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+camorbit(0, -90,'camera');

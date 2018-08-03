@@ -12,7 +12,6 @@ function BATCH_genera_reconstrucciones(modelo_suavizado,inicio,fin)
 
     for i = inicio:fin
         waitbar(i/fin, wb, 'Generating reconstructions...  (4/6)');
-        disp(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_',int2str(i),'_0_des_orig.surf'));
         if (~exist(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_',int2str(i),'_0_des_orig.surf')) > 0)
             res = BATCH_MLMakeTemplate(modelo_suavizado, 0, i);
             res = BATCH_MLMakeModels(res, modelo_suavizado, 0, i, 0);
