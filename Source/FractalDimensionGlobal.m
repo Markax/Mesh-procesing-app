@@ -194,6 +194,7 @@ h = findobj('Tag', 'MainGUI');
 if ~isempty(h)
     g1data = guidata(h);
     axes(g1data.axes2);
+    camp = campos;
     compute_global_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf'),int32(get(handles.slider2, 'Value')), int32(get(handles.slider3, 'Value')));
     
     fset = fopen(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_GLOBAL_SHFD_',int2str(get(handles.slider2, 'Value')),'_',int2str(get(handles.slider3, 'Value')),'.txt'));
@@ -212,6 +213,7 @@ if ~isempty(h)
     fclose(fset);
     
     set(g1data.GlobalSHFD, 'String', globalshfd);
+    campos(camp)
     
 end
     
