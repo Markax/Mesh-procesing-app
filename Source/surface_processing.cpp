@@ -10,6 +10,9 @@
 #include "surface_processing.h"
 
 
+surface_processing sup_global;
+
+
 /*************************************************************************/
 // constructores y destructores
 
@@ -765,6 +768,7 @@ void surface_processing::calcula_fichero_Local_SH_FD_por_vertices(std::string fi
 	/* Implementación según YOTTER 2010 */
 	/* para cada vértice y en cada reconstrucción, se calcula la MEDIA del área de los triángulos incidentes en él */
 	/************************************/
+	lsc.clear(); // necesario para limpiar lo que ya contenga lsc de posibles procesamientos previos de otras superficies
 	lsc.resize(num_vert); // aloja espacio en el vector con los surface_counting para cada vértice
 	size_t nr = recons.size(); // número de reconstrucciones
 	for (size_t vert = 0 ; vert < num_vert; vert++) {

@@ -95,12 +95,14 @@ delete(findall(gcf,'Type','light'));
 camlight('headlight');
 
 
+% Generate SH button
 % --- Executes on button press in MFileButton.
 function MFileButton_Callback(hObject, eventdata, handles)
 % hObject    handle to MFileButton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+%update data
 global min;
 global max;
 
@@ -118,6 +120,7 @@ global numiter;
 numiter = str2double(fgetl(fid));
 
 tline = fgetl(fid);
+%if min/max are new values...
 if (~ischar(tline) || changes == true)
     fclose(fid);
     fid = fopen('../Config/config.txt', 'w');
@@ -131,6 +134,7 @@ if (~ischar(tline) || changes == true)
     max_L_regression_Local = max;
     min_L_regression_Global = min;
     max_L_regression_Global = max;
+%if min/max values have not changed... 
 else
     min_L_regression_Local = str2double(tline);
     max_L_regression_Local = str2double(fgetl(fid));
@@ -171,7 +175,7 @@ end
 
 fclose(fid);
 
-
+%Starting the Generate SH function
 if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && min <= min_L_regression_Local && max >= max_L_regression_Local && min_L_regression_Global < max_L_regression_Global && min <= min_L_regression_Global && max >= max_L_regression_Global)
     addpath(genpath('spharm'));
     addpath(genpath('hk_smoothing'));
@@ -217,7 +221,7 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
     fset = fopen(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_GLOBAL_SHFD_',int2str(min_L_regression_Global),'_',int2str(max_L_regression_Global),'.txt'));
     
     A = fgetl(fset);
-    
+    %Calculate Global SHFD value
     for i=1:3
         A = fgets(fset);
         if (A~=-1)
@@ -228,6 +232,7 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
 
     fclose(fset);
     
+    %Enable buttons for SH functions
     set(handles.text7, 'Enable', 'on');
     set(handles.GlobalSHFD, 'Enable', 'on');
     set(handles.GlobalSHFD, 'String', globalshfd);
@@ -235,6 +240,7 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
     set(handles.pushbutton4,'Enable','on');
     set(handles.pushbutton5,'Enable','on');
     
+    %Save in disk new min/max and filepath values
     fvis = fopen('../Config/actualview.txt', 'w');
     fprintf(fvis, '%s \n', fpath);
     fprintf(fvis, '%d \n', min);
@@ -243,6 +249,7 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
     
     disp('Done');
 else 
+%Error control
     if (min < 1)
         errordlg('Error: Min L value must be 1 or greater', 'Min Value Error');
     end
@@ -311,7 +318,7 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-
+%Open the config menu
 % --------------------------------------------------------------------
 function configmenu_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to configmenu (see GCBO)
@@ -319,7 +326,7 @@ function configmenu_ClickedCallback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 Config
 
-
+%Open the exit dialog window
 % --------------------------------------------------------------------
 function uipushtool4_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to uipushtool4 (see GCBO)
@@ -327,7 +334,7 @@ function uipushtool4_ClickedCallback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 exitdialog
 
-
+%Do a screenshot
 % --------------------------------------------------------------------
 function screenbutton_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to screenbutton (see GCBO)
@@ -340,7 +347,7 @@ fig = isolate_axes(handles.axes2);
 export_fig(strcat(path,file), fig, '-dpng');
 close(fig);
 
-
+%Open the reconstruction window
 % --- Executes on button press in vrbutton.
 function vrbutton_Callback(hObject, eventdata, handles)
 % hObject    handle to vrbutton (see GCBO)
@@ -349,7 +356,7 @@ function vrbutton_Callback(hObject, eventdata, handles)
 
 rebuildsGUI;
 
-
+%Open the fractal dimension global window
 % --- Executes on button press in pushbutton4.
 function pushbutton4_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton4 (see GCBO)
@@ -357,7 +364,7 @@ function pushbutton4_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 FractalDimensionGlobal;
 
-
+%Open the fractal dimension local window
 % --- Executes on button press in pushbutton5.
 function pushbutton5_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton5 (see GCBO)
@@ -365,6 +372,7 @@ function pushbutton5_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 FractalDimensionLocal;
 
+%Select mesh button
 % --- Executes on button press in selectmeshb.
 function selectmeshb_Callback(hObject, eventdata, handles)
 % hObject    handle to selectmeshb (see GCBO)
@@ -443,7 +451,7 @@ function selectmeshb_Callback(hObject, eventdata, handles)
                 rotate3d on;
             end
 
-
+%Rotate mesh 90º left
 % --------------------------------------------------------------------
 function uipushtool10_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to uipushtool10 (see GCBO)
@@ -451,6 +459,7 @@ function uipushtool10_ClickedCallback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 camorbit(-90,0,'camera');
 
+%Rotate mesh 90º right
 % --------------------------------------------------------------------
 function uipushtool11_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to uipushtool11 (see GCBO)
@@ -458,6 +467,7 @@ function uipushtool11_ClickedCallback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 camorbit(90,0,'camera');
 
+%Rotate mesh 90º up
 % --------------------------------------------------------------------
 function uipushtool12_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to uipushtool12 (see GCBO)
@@ -465,6 +475,7 @@ function uipushtool12_ClickedCallback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 camorbit(0, 90,'camera');
 
+%Rotate mesh 90º down
 % --------------------------------------------------------------------
 function uipushtool13_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to uipushtool13 (see GCBO)

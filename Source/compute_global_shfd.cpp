@@ -6,7 +6,7 @@
 #include "surface_processing.h"
 
 
-surface_processing sup_global;
+extern surface_processing sup_global;
 
 /*************************************************************************/
 
