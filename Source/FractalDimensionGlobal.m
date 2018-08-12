@@ -62,6 +62,8 @@ guidata(hObject, handles);
 % uiwait(handles.figure1);
 axes(handles.axes1);
 cla(handles.axes1);
+
+%Data loading
 fid = fopen('../Config/config.txt');
 
 sigma = fgetl(fid);
@@ -86,6 +88,7 @@ rec = max_L-min_L;
 
 global VAreas;
 
+%Set values in the UI
 set(handles.slider2, 'Min', min_L);
 set(handles.text5, 'String', min_L);
 set(handles.slider2, 'Max', max_L);
@@ -102,6 +105,7 @@ set(handles.slider3, 'Value', round(fin));
 set(handles.text10, 'String', round(fin));
 set(handles.slider3, 'SliderStep', [1/(max_L-min_L), 0.1])
 
+%getting regression values...
 global r;
 r = zeros(1, rec);
 for i=min_L:max_L
@@ -160,11 +164,13 @@ function varargout = FractalDimensionGlobal_OutputFcn(hObject, eventdata, handle
 % Get default command line output from handles structure
 varargout{1} = handles.output;
 
+%'Update & close' button
 % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
 % saving new regression values
 fid = fopen('../Config/config.txt');
 old_sigma = fgetl(fid);
@@ -221,6 +227,7 @@ axes(handles.axes1);
 
 close
 
+%'Min L Regression' slider
 % --- Executes on slider movement.
 function slider2_Callback(hObject, eventdata, handles)
 % hObject    handle to slider2 (see GCBO)
@@ -237,7 +244,7 @@ if ( get(handles.slider3, 'Value') <= get(handles.slider2, 'Value') )
         set(handles.text4, 'String', round(get(handles.slider2, 'Value'))-1);
     set(handles.slider2, 'Value', round(get(handles.slider2, 'Value'))-1);
 else
-    
+%Recalculate values
 global rec;
 global min_L;
 global max_L;
@@ -286,7 +293,7 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 
-
+%'Max L Regression' slider
 % --- Executes on slider movement.
 function slider3_Callback(hObject, eventdata, handles)
 % hObject    handle to slider3 (see GCBO)
@@ -303,7 +310,7 @@ if ( get(handles.slider3, 'Value') <= get(handles.slider2, 'Value') )
     set(handles.text10, 'String', round(get(handles.slider3, 'Value'))+1);
     set(handles.slider3, 'Value', round(get(handles.slider3, 'Value'))+1);
 else
-    
+%Recalculate values
 global rec;
 global min_L;
 global max_L;
@@ -351,6 +358,7 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 
+%'Close' button (toolbar)
 % --------------------------------------------------------------------
 function uipushtool1_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to uipushtool1 (see GCBO)
@@ -358,7 +366,7 @@ function uipushtool1_ClickedCallback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 close
 
-
+%'Close' button
 % --- Executes on button press in pushbutton2.
 function pushbutton2_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton2 (see GCBO)

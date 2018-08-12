@@ -138,6 +138,7 @@ varargout{1} = handles.output;
 % The figure can be deleted now
 delete(handles.figure1);
 
+%'Yes' button
 % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
@@ -146,6 +147,7 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 
 close all
 
+%'No' button
 % --- Executes on button press in pushbutton2.
 function pushbutton2_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton2 (see GCBO)
