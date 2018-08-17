@@ -22,7 +22,7 @@ function varargout = UJA_SHFD(varargin)
 
 % Edit the above text to modify the response to help UJA_SHFD
 
-% Last Modified by GUIDE v2.5 03-Aug-2018 20:25:28
+% Last Modified by GUIDE v2.5 17-Aug-2018 18:44:02
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -379,15 +379,14 @@ function selectmeshb_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 [file,path] = uigetfile('../Models/*.*');
-[filepath,name,ext] = fileparts(file);
-            if isequal(file,0)
-               disp('User selected Cancel');
-            else
-               global fpath;
-               fpath = fullfile(path,file);
-               disp(['User selected ', fullfile(path,file)]);
-            end
-            if (isequal(ext, '.obj'))
+if isequal(file,0)
+    disp('User selected Cancel');
+else
+   [filepath,name,ext] = fileparts(file);
+    global fpath;
+    fpath = fullfile(path,file);
+    disp(['User selected ', fullfile(path,file)]);
+    if (isequal(ext, '.obj'))
                 set(handles.GlobalSHFD, 'Enable', 'off');
                 set(handles.text7, 'Enable', 'off');
                 set(handles.vrbutton, 'Enable', 'off');
@@ -418,7 +417,7 @@ function selectmeshb_Callback(hObject, eventdata, handles)
                 camlight('headlight')
                 cameratoolbar;
                 rotate3d on;
-            else
+    else
                 set(handles.GlobalSHFD, 'Enable', 'off');
                 set(handles.text7, 'Enable', 'off');
                 set(handles.vrbutton, 'Enable', 'off');
@@ -449,7 +448,9 @@ function selectmeshb_Callback(hObject, eventdata, handles)
                 camlight('headlight');
                 cameratoolbar;
                 rotate3d on;
-            end
+    end
+end
+            
 
 %Rotate mesh 90º left
 % --------------------------------------------------------------------
@@ -482,3 +483,11 @@ function uipushtool13_ClickedCallback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 camorbit(0, -90,'camera');
+
+%About button
+% --------------------------------------------------------------------
+function uipushtool9_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to uipushtool9 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+about
