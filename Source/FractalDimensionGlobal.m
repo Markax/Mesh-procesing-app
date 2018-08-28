@@ -22,7 +22,7 @@ function varargout = FractalDimensionGlobal(varargin)
 
 % Edit the above text to modify the response to help FractalDimensionGlobal
 
-% Last Modified by GUIDE v2.5 27-Jul-2018 13:35:08
+% Last Modified by GUIDE v2.5 26-Aug-2018 21:09:18
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
