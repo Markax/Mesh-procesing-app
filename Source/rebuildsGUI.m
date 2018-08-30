@@ -71,7 +71,7 @@ maxL = str2double(fgetl(fvis));
 fclose(fvis);
 actualL = minL;
 
-visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_',int2str(actualL),'_0_des_orig.surf'));
+visualiza_mapa_local_shfd(strcat('..\Models\',name,'_temp','\template_',name,'_OL_2O_',int2str(actualL),'_0_des_orig.surf'));
 rotate3d on;
 set(handles.text2, 'String', strcat('Reconstructions for L=', int2str(actualL)));
 
@@ -104,7 +104,7 @@ global maxL;
 camp = campos;
 actualL = actualL + 1;
 
-visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_',int2str(actualL),'_0_des_orig.surf'));
+visualiza_mapa_local_shfd(strcat('..\Models\',name,'_temp','\template_',name,'_OL_2O_',int2str(actualL),'_0_des_orig.surf'));
 
 set(handles.text2, 'String', strcat('Reconstruction for L=', int2str(actualL)));
 
@@ -136,7 +136,7 @@ global minL;
 camp = campos;
 actualL = actualL - 1;
 
-visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_',int2str(actualL),'_0_des_orig.surf'));
+visualiza_mapa_local_shfd(strcat('..\Models\',name,'_temp','\template_',name,'_OL_2O_',int2str(actualL),'_0_des_orig.surf'));
 
 set(handles.text2, 'String', strcat('Reconstruction for L=', int2str(actualL)));
 

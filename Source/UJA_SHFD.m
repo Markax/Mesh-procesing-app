@@ -184,41 +184,41 @@ if (min > 0 && max > min && min_L_regression_Local < max_L_regression_Local && m
     
     
     % convert to m file
-    if (~exist(strcat(filepath,'\',name,'_temp','\',name,'.m')) > 0)
+    if (~exist(strcat('..\Models\',name,'_temp','\',name,'.m')) > 0)
         generate_m(fpath);
     end
     
     % m file to Combine and Resize
-    if (~exist(strcat(filepath,'\',name,'_temp','\',name,'_OL_2O.mat')) > 0)
-        BATCH_MLCombineAndResize(strcat(filepath,'\',name,'_temp','\',name,'.m'), 0, 0, 0);
+    if (~exist(strcat('..\Models\',name,'_temp','\',name,'_OL_2O.mat')) > 0)
+        BATCH_MLCombineAndResize(strcat('..\Models\',name,'_temp','\',name,'.m'), 0, 0, 0);
     end
     
     % OL2_O2 file to MakeTemplate
     if (~exist(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_smo.mat')) > 0)
-        BATCH_MLMakeTemplate(strcat(filepath,'\',name,'_temp','\',name,'_OL_2O.mat'), 1, 1)
+        BATCH_MLMakeTemplate(strcat('..\Models\',name,'_temp','\',name,'_OL_2O.mat'), 1, 1)
     end
     
     % Rebuilding
-    BATCH_genera_reconstrucciones(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_smo.mat'), min, max);
+    BATCH_genera_reconstrucciones(strcat('..\Models\',name,'_temp','\template_',name,'_OL_2O_smo.mat'), min, max);
     
     % Generate Areas
-    generate_areas_per_vertex_file(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf'));
+    generate_areas_per_vertex_file(strcat('..\Models\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf'));
     
     %HK_Smooth
-    hk_smooth_3dshfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_AREAS_SIN_SUAVIZAR.txt'), sigma, numiter);
+    hk_smooth_3dshfd(strcat('..\Models\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_AREAS_SIN_SUAVIZAR.txt'), sigma, numiter);
     
     wb = waitbar(0, 'Computing SHFD values...  (6/6)', 'Name', 'Generating Spherical Harmonics');
     %Compute local SHFD
-    compute_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', int2str(sigma),'_', int2str(numiter),'.txt'), int32(min_L_regression_Local), int32(max_L_regression_Local));
+    compute_local_shfd(strcat('..\Models\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', int2str(sigma),'_', int2str(numiter),'.txt'), int32(min_L_regression_Local), int32(max_L_regression_Local));
     waitbar(1/2, wb, 'Computing SHFD values...  (6/6)');
     %Compute global SHFD
-    compute_global_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf'), int32(min_L_regression_Global), int32(max_L_regression_Global));
+    compute_global_shfd(strcat('..\Models\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf'), int32(min_L_regression_Global), int32(max_L_regression_Global));
     waitbar(1, wb, 'Computing SHFD values...  (6/6)');
     close(wb);
     %Visualice local map SHFD
-    visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\',name,'.m'), strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_',int2str(sigma),'_',int2str(numiter),'.local_shfd_',int2str(min_L_regression_Local),'_',int2str(max_L_regression_Local),'.txt'));
+    visualiza_mapa_local_shfd(strcat('..\Models\',name,'_temp','\',name,'.m'), strcat('..\Models\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_',int2str(sigma),'_',int2str(numiter),'.local_shfd_',int2str(min_L_regression_Local),'_',int2str(max_L_regression_Local),'.txt'));
     
-    fset = fopen(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_GLOBAL_SHFD_',int2str(min_L_regression_Global),'_',int2str(max_L_regression_Global),'.txt'));
+    fset = fopen(strcat('..\Models\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_GLOBAL_SHFD_',int2str(min_L_regression_Global),'_',int2str(max_L_regression_Global),'.txt'));
     
     A = fgetl(fset);
     %Calculate Global SHFD value

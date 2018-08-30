@@ -131,9 +131,8 @@ fprintf(fland,'%f %f %f\n', maxx, maxy, maxz);
 fprintf(fland,'%f %f %f\n', maxx, maxy, minz);
 
 fclose(fland);
+movefile(fichero_land, strcat('../Models/', folder));
 
 waitbar(1, wb, 'Generating M File...  (1/6)');
-
-movefile(fichero_land, strcat('../Models/', folder));
 
 close(wb);

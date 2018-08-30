@@ -84,7 +84,7 @@ global max_L;
 max_L = str2double(fgetl(fid2));
 fclose(fid2);
 
-fvert = fopen(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', sigma,'_', numiter,'.txt'));
+fvert = fopen(strcat('..\Models\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', sigma,'_', numiter,'.txt'));
 global rec 
 rec = str2double(fgetl(fvert));
 global n_vert
@@ -277,8 +277,8 @@ if ~isempty(h)
     g1data = guidata(h);
     axes(g1data.axes2);
     camp = campos;
-    compute_local_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', old_sigma,'_', old_niter,'.txt'), int32(get(handles.slider2, 'Value')), int32(get(handles.slider3, 'Value')));
-    visualiza_mapa_local_shfd(strcat(filepath,'\',name,'_temp','\',name,'.m'), strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_',old_sigma,'_',old_niter,'.local_shfd_',int2str(get(handles.slider2, 'Value')),'_',int2str(get(handles.slider3, 'Value')),'.txt'));
+    compute_local_shfd(strcat('..\Models\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_', old_sigma,'_', old_niter,'.txt'), int32(get(handles.slider2, 'Value')), int32(get(handles.slider3, 'Value')));
+    visualiza_mapa_local_shfd(strcat('..\Models\',name,'_temp','\',name,'.m'), strcat('..\Models\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_LOCAL_RESULTS_VERTICES_HKS_',old_sigma,'_',old_niter,'.local_shfd_',int2str(get(handles.slider2, 'Value')),'_',int2str(get(handles.slider3, 'Value')),'.txt'));
     campos(camp)
 end
     

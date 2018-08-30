@@ -113,7 +113,7 @@ for i=min_L:max_L
 end
 
 
-f_area = fopen(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_GLOBAL_SHFD_',int2str(ini),'_',int2str(fin),'.txt'));
+f_area = fopen(strcat('..\Models\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_GLOBAL_SHFD_',int2str(ini),'_',int2str(fin),'.txt'));
 
 A = fgetl(f_area);
     
@@ -201,10 +201,10 @@ if ~isempty(h)
     g1data = guidata(h);
     axes(g1data.axes2);
     camp = campos;
-    compute_global_shfd(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf'),int32(get(handles.slider2, 'Value')), int32(get(handles.slider3, 'Value')));
+    compute_global_shfd(strcat('..\Models\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf'),int32(get(handles.slider2, 'Value')), int32(get(handles.slider3, 'Value')));
     
-    fset = fopen(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_GLOBAL_SHFD_',int2str(get(handles.slider2, 'Value')),'_',int2str(get(handles.slider3, 'Value')),'.txt'));
-    disp(strcat(filepath,'\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_GLOBAL_SHFD_',int2str(get(handles.slider2, 'Value')),'_',int2str(get(handles.slider3, 'Value')),'.txt'));
+    fset = fopen(strcat('..\Models\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_GLOBAL_SHFD_',int2str(get(handles.slider2, 'Value')),'_',int2str(get(handles.slider3, 'Value')),'.txt'));
+    disp(strcat('..\Models\',name,'_temp','\template_',name,'_OL_2O_1_0_des_orig.surf_GLOBAL_SHFD_',int2str(get(handles.slider2, 'Value')),'_',int2str(get(handles.slider3, 'Value')),'.txt'));
     A = fgetl(fset);
     
     for i=1:3
