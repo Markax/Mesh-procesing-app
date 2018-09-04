@@ -22,7 +22,7 @@ function varargout = UJA_SHFD(varargin)
 
 % Edit the above text to modify the response to help UJA_SHFD
 
-% Last Modified by GUIDE v2.5 17-Aug-2018 18:44:02
+% Last Modified by GUIDE v2.5 04-Sep-2018 16:58:50
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -491,3 +491,11 @@ function uipushtool9_ClickedCallback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 about
+
+%Help button
+% --------------------------------------------------------------------
+function helpbutton_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to helpbutton (see GCBO)
+Help
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
